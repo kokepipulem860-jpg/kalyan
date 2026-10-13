@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>KALYAN 777 | Official Online Points Gaming Platform</title>
+
+  <!-- PWA & Mobile Web App Meta -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#d97706">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Kalyan 777">
+  <link rel="apple-touch-icon" href="img/logo.png">
+
+  <!-- Google Fonts: Inter, JetBrains Mono, Outfit + Authentic Devanagari & Matka Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700;800;900&family=Noto+Sans+Devanagari:wght@500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&family=Rozha+One&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/app.css?v=1.2.0">
+</head>
+<body>
+
+  <!-- Main Mobile-First Shell -->
+  <div class="mobile-app-shell">
+
+    <!-- Top Sticky Header -->
+    <header class="player-header">
+      <div style="display: flex; align-items: center; gap: 0.65rem;">
+        <button id="btn-open-drawer" class="btn-drawer-toggle" aria-label="Open Navigation Menu" onclick="window.PlayerApp.openDrawer()">
+          <span class="drawer-bar"></span>
+          <span class="drawer-bar"></span>
+          <span class="drawer-bar"></span>
+        </button>
+        <a href="#" class="brand-title" onclick="window.PlayerApp.switchTab('home')">
+          <img src="img/logo.png" alt="Kalyan 777" class="brand-logo" style="width: 36px; height: 36px; border-radius: 8px; object-fit: contain;">
+          <div class="brand-text-wrap">
+            <h2 style="font-size: 1.15rem; font-weight: 900; background: linear-gradient(180deg, #FFE873 0%, #D48800 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">KALYAN 777</h2>
+            <span data-i18n="app_tagline" style="font-size: 0.58rem; color: #D97706; font-weight: 800;">OFFICIAL GAMING APP</span>
+          </div>
+        </a>
+      </div>
+
+      <div class="header-user-wallet">
+        <button id="btn-lang-toggle" class="btn-lang-pill" onclick="window.PlayerApp.toggleLanguage()" title="Switch Language (हिन्दी / English)">
+          <span class="lang-flag">🇮🇳</span>
+          <span id="lang-label">हिन्दी</span>
+        </button>
+        <div id="header-points-pill" class="points-pill hide-on-mobile" onclick="window.PlayerApp.switchTab('wallet')">
+          <span>💰</span>
+          <span id="header-wallet-balance">₹ 0</span>
+        </div>
+        <button class="btn-add-pts-mini" title="Add Points" onclick="window.PlayerApp.openDepositModal()">+</button>
+        <button id="btn-user-avatar" class="btn-user-avatar-pill" onclick="window.PlayerApp.handleHeaderAvatarClick()" title="User Profile" style="display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.32rem 0.6rem; border-radius: 9999px; font-size: 0.78rem; font-weight: 800; background: #FFFFFF; border: 1.5px solid var(--border-card); color: #1C1917; cursor: pointer; flex-shrink: 0; box-shadow: 0 2px 6px rgba(180, 130, 40, 0.1); white-space: nowrap;">
+          <span class="avatar-mini-circle">👤</span>
+          <span id="btn-user-avatar-text">Login</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Scrolling Marquee Notice -->
+    <div class="marquee-bar">
+      <span>⚡</span>
+      <div id="app-marquee" class="marquee-content">
+        Welcome to Kalyan 777! Play Kalyan, Milan, Madhur, Rajdhani & Gali Disawar with instant auto settlement.
+      </div>
+    </div>
+
+    <!-- Offline Connectivity Alert -->
+    <div id="app-offline-banner" class="app-offline-banner" style="display: none;">
+      <span>📡</span>
+      <span>You are currently offline. Live countdowns will resume once connection is restored.</span>
+    </div>
+
+    <!-- PWA 1-Tap Home Screen Install Banner -->
+    <div id="pwa-install-banner" class="pwa-install-banner" style="display: none;">
+      <div class="pwa-install-left">
+        <div class="pwa-install-icon-wrap" style="background: #000; border: 1px solid #F5B800; border-radius: 8px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+          <img src="img/logo.png" alt="Kalyan 777" style="width: 28px; height: 28px; object-fit: contain;">
+        </div>
+        <div class="pwa-install-text">
+          <div class="pwa-install-title">Install Kalyan 777 App</div>
+          <div class="pwa-install-desc">Fast 1-Tap Launch • Standalone Fullscreen App</div>
+        </div>
+      </div>
+      <div class="pwa-install-actions">
+        <button id="btn-pwa-install" class="btn-pwa-install-action" onclick="window.PlayerApp.triggerPwaInstall()">📲 Install App</button>
+        <button class="btn-pwa-install-close" onclick="window.PlayerApp.dismissInstallBanner()" title="Dismiss">✕</button>
+      </div>
+    </div>
+
+    <!-- Main Dynamic Tab Viewport -->
+    <main class="player-viewport">
+
+      <!-- ============================================================
+           TAB 1: HOME (BAZAARS / MARKETS) - EXACT MATCH SCREEN 1
+           ============================================================ -->
+      <section id="tab-home">
+
+        <!-- Top Big 3D Gold Brand Header (Screen 1) -->
+        <div class="a-one-brand-header">
+          <h1 class="a-one-brand-title">KALYAN 777</h1>
+        </div>
+
+        <!-- Screen 1: Dashboard Prominent Player Profile Card -->
+        <div class="a-one-profile-bar" onclick="window.PlayerApp.handleHeaderAvatarClick()" title="View Profile & Account Settings" style="background: #FFFFFF; border: 1.5px solid var(--border-card); border-radius: var(--radius-lg); padding: 0.65rem 0.85rem; display: flex; align-items: center; justify-content: space-between; margin: 0.25rem 0.85rem 0.65rem; box-shadow: 0 3px 10px rgba(180, 130, 40, 0.08); cursor: pointer;">
+          <div class="a-one-profile-left" style="display: flex; align-items: center; gap: 0.65rem; min-width: 0;">
+            <div id="dash-avatar-circle" class="a-one-profile-avatar" style="width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); color: #070A12; font-weight: 900; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 2px 8px rgba(217, 119, 6, 0.3); border: 1.5px solid #FDE68A;">RP</div>
+            <div class="a-one-profile-info" style="display: flex; flex-direction: column; min-width: 0;">
+              <div class="a-one-profile-name" id="dash-user-name" style="font-size: 0.92rem; font-weight: 900; color: #1C1917; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Ramesh Patel</div>
+              <div class="a-one-profile-sub" id="dash-user-sub" style="font-size: 0.68rem; color: #78716C; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">+91 9820145890 • Player Profile</div>
+            </div>
+          </div>
+          <div class="a-one-profile-right" style="display: flex; align-items: center; gap: 0.45rem; flex-shrink: 0;">
+            <span id="dash-user-badge" class="a-one-profile-badge active" style="background: #DCFCE7; border: 1px solid #86EFAC; color: #166534; font-size: 0.62rem; font-weight: 800; padding: 0.2rem 0.55rem; border-radius: 9999px; letter-spacing: 0.5px;">● KYC ACTIVE</span>
+            <span class="a-one-profile-arrow" style="color: #A8A29E; font-size: 1.1rem; font-weight: 800;">›</span>
+          </div>
+        </div>
+
+        <!-- Screen 1: Wallet Balance Card -->
+        <div class="a-one-wallet-bar">
+          <button class="btn-a1-hamburger" aria-label="Open Navigation Menu" onclick="window.PlayerApp.openDrawer()">
+            ☰
+          </button>
+          <div class="a-one-wallet-center">
+            <svg class="a-one-wallet-icon-svg" viewBox="0 0 40 40" fill="none">
+              <rect x="4" y="8" width="32" height="24" rx="5" fill="#8D4F1E" stroke="#5C300F" stroke-width="2"/>
+              <path d="M4 14C4 10.6863 6.68629 8 10 8H30C33.3137 8 36 10.6863 36 14V16H4V14Z" fill="#A76127"/>
+              <rect x="24" y="16" width="12" height="10" rx="3" fill="#6B3A13" stroke="#D49B00" stroke-width="1.5"/>
+              <circle cx="28" cy="21" r="2" fill="#F5B800"/>
+            </svg>
+            <div class="a-one-wallet-meta">
+              <span class="a-one-wallet-label" data-i18n="balance_label">Wallet Balance</span>
+              <span class="a-one-wallet-stars">― ★★★ ―</span>
+            </div>
+          </div>
+          <div id="home-wallet-display" class="a-one-wallet-amount">₹ 4328</div>
+        </div>
+
+        <!-- Screen 1: Two Prominent Action Cards (WITHDRAW in Red & DEPOSIT in Green) -->
+        <div class="quick-actions-grid">
+          <!-- WITHDRAW Card (Red Gradient) -->
+          <div class="quick-card-withdraw" onclick="window.PlayerApp.openWithdrawModal()">
+            <svg class="quick-card-icon-svg" viewBox="0 0 48 48" fill="none">
+              <rect x="6" y="8" width="36" height="32" rx="4" fill="#991B1B" stroke="#F87171" stroke-width="1.5"/>
+              <rect x="12" y="13" width="24" height="10" rx="2" fill="#1C1917"/>
+              <text x="24" y="21" fill="#4ADE80" font-size="8" font-family="monospace" text-anchor="middle" font-weight="bold">ATM</text>
+              <rect x="14" y="27" width="20" height="3" rx="1.5" fill="#450A0A"/>
+              <path d="M18 30L20 36H28L30 30" fill="#22C55E"/>
+              <circle cx="34" cy="34" r="2.5" fill="#FBBF24"/>
+            </svg>
+            <div class="quick-card-info">
+              <span class="quick-card-title">WITHDRAW</span>
+              <span class="quick-card-sub">Instant withdrawal to your bank</span>
+            </div>
+            <div class="quick-card-arrow">›</div>
+          </div>
+
+          <!-- DEPOSIT Card (Green Gradient) -->
+          <div class="quick-card-deposit" onclick="window.PlayerApp.openDepositModal()">
+            <svg class="quick-card-icon-svg" viewBox="0 0 48 48" fill="none">
+              <rect x="6" y="10" width="36" height="28" rx="4" fill="#14532D" stroke="#4ADE80" stroke-width="1.5"/>
+              <path d="M14 6H34V12H14V6Z" fill="#166534" stroke="#86EFAC" stroke-width="1"/>
+              <circle cx="24" cy="24" r="7" fill="#15803D" stroke="#BBF7D0" stroke-width="1"/>
+              <text x="24" y="28" fill="#FEF08A" font-size="12" font-family="sans-serif" text-anchor="middle" font-weight="bold">₹</text>
+              <rect x="30" y="18" width="8" height="12" rx="2" fill="#166534" stroke="#FBBF24" stroke-width="1"/>
+            </svg>
+            <div class="quick-card-info">
+              <span class="quick-card-title">DEPOSIT</span>
+              <span class="quick-card-sub">Add money to your wallet</span>
+            </div>
+            <div class="quick-card-arrow">›</div>
+          </div>
+        </div>
+
+        <!-- Starline Strip: Horizontal Live Carousel -->
+        <div class="starline-section" style="margin-top: 1rem; margin-bottom: 1.25rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.5rem;">
+            <div style="display: flex; align-items: center; gap: 0.4rem;">
+              <span style="font-size: 1rem;">⭐</span>
+              <h4 data-i18n="starline_title" style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); letter-spacing: 0.5px;">KALYAN STARLINE</h4>
+              <span class="starline-badge-live" data-i18n="starline_hourly">HOURLY</span>
+            </div>
+            <span style="font-size: 0.7rem; color: var(--text-dim);">Slide to view ➔</span>
+          </div>
+          <div id="home-starline-list" class="starline-scroll-container"></div>
+        </div>
+
+        <!-- Bazaars Filter Chips -->
+        <div class="market-filter-chips">
+          <button class="filter-chip active" data-filter="ALL" data-i18n="filter_all" onclick="window.PlayerApp.filterMarkets('ALL')">All Bazaars</button>
+          <button class="filter-chip" data-filter="OPEN" data-i18n="filter_open" onclick="window.PlayerApp.filterMarkets('OPEN')">🟢 Live Open</button>
+          <button class="filter-chip" data-filter="NIGHT" data-i18n="filter_night" onclick="window.PlayerApp.filterMarkets('NIGHT')">🌙 Night Draws</button>
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: space-between; margin: 1rem 0 0.75rem;">
+          <h3 data-i18n="regular_bazaars" style="font-size: 1.05rem; font-weight: 800;">🎲 Regular Bazaars</h3>
+          <span id="live-ist-clock" class="ist-clock-badge">🇮🇳 IST Live</span>
+        </div>
+
+        <!-- Dynamic Regular Markets List -->
+        <div id="home-markets-list"></div>
+
+        <!-- King Markets (Gali Disawar) Section -->
+        <div class="king-section" style="margin-top: 1.5rem; margin-bottom: 1.25rem;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem;">
+            <div style="display: flex; align-items: center; gap: 0.4rem;">
+              <span style="font-size: 1.1rem;">👑</span>
+              <h3 data-i18n="king_bazaars" style="font-size: 1.05rem; font-weight: 800; color: var(--text-main);">King Bazaars (Gali Disawar)</h3>
+              <span class="starline-badge-live" data-i18n="badge_haruf_jodi" style="background: rgba(239, 68, 68, 0.2); color: #f87171; border-color: #ef4444;">HARUF & JODI</span>
+            </div>
+          </div>
+          <div id="home-king-list" class="king-markets-grid"></div>
+        </div>
+      </section>
+
+      <!-- ============================================================
+           TAB 2: PLAY GAME - SCREEN 2 & SCREEN 3 (EXACT MATCH)
+           ============================================================ -->
+      <section id="tab-play" style="display: none; padding: 0;">
+
+        <!-- ========================================================
+             SCREEN 2: SUB-GAME SELECTION VIEW (MADHUR NIGHT etc.)
+             ======================================================== -->
+        <div id="play-subgame-view">
+          <!-- Screen 2 Header: Back button + Market Title -->
+          <div class="a1-subpage-header">
+            <button type="button" class="a1-back-btn" onclick="window.PlayerApp.backToHome()" title="Back to Bazaars">
+              ‹
+            </button>
+            <h2 id="play-subgame-market-title" class="a1-subpage-title">MADHUR NIGHT</h2>
+            <div style="width: 36px;"></div> <!-- balance spacer -->
+          </div>
+
+          <!-- Screen 2: 2-Column Grid of 12 Game Mode Cards -->
+          <div class="a1-game-grid-2col">
+            <!-- 1. Single -->
+            <div class="a1-game-card" onclick="window.PlayerApp.selectGameTypeAndOpenBidding('Single Digit')">
+              <div class="a1-game-card-icon-wrap">
+                <svg viewBox="0 0 32 32" fill="none">
+                  <rect x="4" y="4" width="24" height="24" rx="5" fill="#FFF"/>
+                  <circle cx="16" cy="16" r="3.8" fill="#7F1D1D"/>
+                </svg>
+              </div>
+              <div class="a1-game-card-btn">Single</div>
+            </div>
+
+            <!-- 2. Jodi -->
+            <div class="a1-game-card" onclick="window.PlayerApp.selectGameTypeAndOpenBidding('Jodi')">
+              <div class="a1-game-card-icon-wrap">
+                <svg viewBox="0 0 32 32" fill="none">
+                  <rect x="4" y="4" width="24" height="24" rx="5" fill="#FFF"/>
+                  <circle cx="10" cy="10" r="3.2" fill="#7F1D1D"/>
+                  <circle cx="22" cy="22" r="3.2" fill="#7F1D1D"/>
+                </svg>
+              </div>
+              <div class="a1-game-card-btn">Jodi</div>
+            </div>
+
+            <!-- 3. Single Panna -->
+            <div class="a1-game-card" onclick="window.PlayerApp.selectGameTypeAndOpenBidding('Single Patti')">
+              <div class="a1-game-card-icon-wrap">
+                <svg viewBox="0 0 32 32" fill="none">
+                  <rect x="4" y="4" width="24" height="24" rx="5" fill="#FFF"/>
+                  <circle cx="9" cy="9" r="2.8" fill="#7F1D1D"/>
+                  <circle cx="16" cy="16" r="2.8" fill="#7F1D1D"/>
+                  <circle cx="23" cy="23" r="2.8" fill="#7F1D1D"/>
+                </svg>
+              </div>
+              <div class="a1-game-card-btn">Single Panna</div>
+            </div>
+
+            <!-- 4. Double Panna -->
+            <div class="a1-game-card" onclick="window.PlayerApp.selectGameTypeAndOpenBidding('Double Patti')">
+              <div class="a1-game-card-icon-wrap">
+                <svg viewBox="0 0 32 32" fill="none">
+                  <rect x="4" y="4" width="24" height="24" rx="5" fill="#FFF"/>
+                  <circle cx="10" cy="10" r="2.8" fill="#7F1D1D"/>
+                  <circle cx="22" cy="10" r="2.8" fill="#7F1D1D"/>
+                  <circle cx="10" cy="22" r="2.8" fill="#7F1D1D"/>
+                  <circle cx="22" cy="22" r="2.8" fill="#7F1D1D"/>
+                </svg>
+              </div>
+              <div class="a1-game-card-btn">Double Panna</div>
+            </div>
+
+            <!-- 5. Jodi Family -->
+            <div class="a1-game-card" onclick="window.PlayerApp.selectGameTypeAndOpenBidding('Family Jodi')">
+              <div class="a1-game-card-icon-wrap">
+                <svg viewBox="0 0 32 32" fill="none">
+                  <rect x="4" y="4" width="24" height="24" rx="5" fill="#FFF"/>
+                  <circle cx="10" cy="10" r="2.5" fill="#7F1D1D"/>
+                  <circle cx="22" cy="10" r="2.5" fill="#7F1D1D"/>
+                  <circle cx="16" cy="16" r="2.5" fill="#7F1D1D"/>
+                  <circle cx="10" cy="22" r="2.5" fill="#7F1D1D"/>
+                  <circle cx="22" cy="22" r="2.5" fill="#7F1D1D"/>
+                </svg>
+              </div>
+              <div class="a1-game-card-btn">Jodi Family</div>
+            </div>
+
+            <!-- 6. Red Jodi -->
+            <div class="a1-game-card" onclick="window.PlayerApp.selectGameTypeAndOpenBidding('Red Jodi')">
+              <div class="a1-game-card-icon-wrap">
+                <svg viewBox="0 0 32 32" fill="none">
+                  <rect x="6" y="3" width="20" height="26" rx="4" fill="#FFF" stroke="#E5C378" stroke-width="1.5"/>
+                  <path d="M16 11C14 8 10 9 10 13C10 17 16 21 16 21C16 21 22 17 22 13C22 9 18 8 16 11Z" fill="#DC2626"/>
+                </svg>
+              </div>
+              <div class="a1-game-card-btn">Red Jodi</div>
+            </div>
+
+            <!-- 7. Triple Panna -->
+            <div class="a1-game-card" onclick="window.PlayerApp.selectGameTypeAndOpenBidding('Triple Patti')">
+              <div class="a1-game-card-icon-wrap">
+                <svg viewBox="0 0 32 32" fill="none">
+                  <circle cx="16" cy="16" r="13" fill="#FFF" stroke="#D49B00" stroke-width="2"/>
+                  <circle cx="16" cy="16" r="8" fill="#7F1D1D"/>
+                  <circle cx="16" cy="16" r="4" fill="#F5B800"/>
+                </svg>
+              </div>
+              <div class="a1-game-card-btn">Triple Panna</div>
+            </div>
+
+            <!-- 8. Half Sangam -->
+            <div class="a1-game-card" onclick="window.PlayerApp.selectGameTypeAndOpenBidding('Half Sangam')">
+              <div class="a1-game-card-icon-wrap">
+                <svg viewBox="0 0 32 32" fill="none">
+                  <rect x="6" y="4" width="20" height="24" rx="4" fill="#FFF"/>
+                  <path d="M6 4H16V28H6V4Z" fill="#D97706"/>
+                  <circle cx="11" cy="16" r="3" fill="#FFF"/>
+                  <circle cx="21" cy="16" r="3" fill="#7F1D1D"/>
+                </svg>
+              </div>
+              <div class="a1-game-card-btn">Half Sangam</div>
+            </div>
+
+            <!-- 9. Full Sangam -->
+            <div class="a1-game-card" onclick="window.PlayerApp.selectGameTypeAndOpenBidding('Full Sangam')">
+              <div class="a1-game-card-icon-wrap">
+                <svg viewBox="0 0 32 32" fill="none">
+                  <path d="M6 23L4 10L10 15L16 7L22 15L28 10L26 23H6Z" fill="#F5B800" stroke="#FFF" stroke-width="1.5"/>
+                  <circle cx="16" cy="7" r="1.5" fill="#FFF"/>
+                </svg>
+              </div>
+              <div class="a1-game-card-btn">Full Sangam</div>
+            </div>
+
+            <!-- 10. SP Motor -->
+            <div class="a1-game-card" onclick="window.PlayerApp.selectGameTypeAndOpenBidding('SP Motor')">
+              <div class="a1-game-card-icon-wrap">
+                <svg viewBox="0 0 32 32" fill="none">
+                  <circle cx="16" cy="16" r="12" stroke="#FFF" stroke-width="2"/>
+                  <path d="M16 16L22 10" stroke="#F5B800" stroke-width="2.5" stroke-linecap="round"/>
+                  <circle cx="16" cy="16" r="3" fill="#FFF"/>
+                </svg>
+              </div>
+              <div class="a1-game-card-btn">SP Motor</div>
+            </div>
+
+            <!-- 11. DP Motor -->
+            <div class="a1-game-card" onclick="window.PlayerApp.selectGameTypeAndOpenBidding('DP Motor')">
+              <div class="a1-game-card-icon-wrap">
+                <svg viewBox="0 0 32 32" fill="none">
+                  <path d="M12 7L6 17H15L13 25L23 13H15L18 7H12Z" fill="#F5B800" stroke="#FFF" stroke-width="1"/>
+                </svg>
+              </div>
+              <div class="a1-game-card-btn">DP Motor</div>
+            </div>
+
+            <!-- 12. Andar Haruf -->
+            <div class="a1-game-card" onclick="window.PlayerApp.selectGameTypeAndOpenBidding('Andar Haruf')">
+              <div class="a1-game-card-icon-wrap">
+                <svg viewBox="0 0 32 32" fill="none">
+                  <circle cx="16" cy="16" r="12" fill="#FFF"/>
+                  <path d="M18 10L12 16L18 22" stroke="#7F1D1D" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </div>
+              <div class="a1-game-card-btn">Andar Haruf</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ========================================================
+             SCREEN 3: BIDDING / GAME PLAY VIEW (SINGLE DIGIT etc.)
+             ======================================================== -->
+        <div id="play-bidding-view" style="display: none;">
+          <!-- Screen 3 Header: Back button + Market Title -->
+          <div class="a1-subpage-header">
+            <button type="button" class="a1-back-btn" onclick="window.PlayerApp.backToGameSelect()" title="Back to Game Modes">
+              ‹
+            </button>
+            <h2 id="play-bidding-market-title" class="a1-subpage-title">MADHUR NIGHT</h2>
+            <div style="width: 36px;"></div>
+          </div>
+
+          <!-- Sub-badge Pill (Screen 3: SINGLE) -->
+          <div class="a1-badge-pill-wrap">
+            <div id="active-game-pill" class="a1-badge-pill">SINGLE</div>
+          </div>
+
+          <!-- Date & Time Card (Screen 3) -->
+          <div class="a1-datetime-card">
+            <div class="a1-dt-col">
+              <svg class="a1-dt-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <div class="a1-dt-text">
+                <span class="a1-dt-label">DATE</span>
+                <span id="bidding-date-display" class="a1-dt-val">June 4, 2026</span>
+              </div>
+            </div>
+
+            <div class="a1-dt-col">
+              <svg class="a1-dt-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              <div class="a1-dt-text">
+                <span class="a1-dt-label">TIME</span>
+                <span id="bidding-time-display" class="a1-dt-val">7:25:15 PM</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Session Selector (Screen 3: OPEN vs CLOSE) -->
+          <div id="play-session-bar" class="a1-session-toggle-row">
+            <button type="button" class="a1-session-btn active-green" data-session="OPEN" onclick="window.PlayerApp.setSession('OPEN')">
+              OPEN
+            </button>
+            <button type="button" class="a1-session-btn inactive-white" data-session="CLOSE" onclick="window.PlayerApp.setSession('CLOSE')">
+              CLOSE
+            </button>
+          </div>
+
+          <!-- 1. Screen 3: 2-Column Number Keypad / Amount Input Grid (0 to 9) -->
+          <div id="a1-single-ank-grid" class="a1-ank-grid-2col">
+            <div class="a1-ank-row">
+              <span class="a1-ank-num">0</span>
+              <input type="number" inputmode="numeric" class="a1-ank-input ank-input-field" data-digit="0" placeholder="Enter Amount ₹" oninput="window.PlayerApp.calcGridTotal()">
+            </div>
+            <div class="a1-ank-row">
+              <span class="a1-ank-num">1</span>
+              <input type="number" inputmode="numeric" class="a1-ank-input ank-input-field" data-digit="1" placeholder="Enter Amount ₹" oninput="window.PlayerApp.calcGridTotal()">
+            </div>
+            <div class="a1-ank-row">
+              <span class="a1-ank-num">2</span>
+              <input type="number" inputmode="numeric" class="a1-ank-input ank-input-field" data-digit="2" placeholder="Enter Amount ₹" oninput="window.PlayerApp.calcGridTotal()">
+            </div>
+            <div class="a1-ank-row">
+              <span class="a1-ank-num">3</span>
+              <input type="number" inputmode="numeric" class="a1-ank-input ank-input-field" data-digit="3" placeholder="Enter Amount ₹" oninput="window.PlayerApp.calcGridTotal()">
+            </div>
+            <div class="a1-ank-row">
+              <span class="a1-ank-num">4</span>
+              <input type="number" inputmode="numeric" class="a1-ank-input ank-input-field" data-digit="4" placeholder="Enter Amount ₹" oninput="window.PlayerApp.calcGridTotal()">
+            </div>
+            <div class="a1-ank-row">
+              <span class="a1-ank-num">5</span>
+              <input type="number" inputmode="numeric" class="a1-ank-input ank-input-field" data-digit="5" placeholder="Enter Amount ₹" oninput="window.PlayerApp.calcGridTotal()">
+            </div>
+            <div class="a1-ank-row">
+              <span class="a1-ank-num">6</span>
+              <input type="number" inputmode="numeric" class="a1-ank-input ank-input-field" data-digit="6" placeholder="Enter Amount ₹" oninput="window.PlayerApp.calcGridTotal()">
+            </div>
+            <div class="a1-ank-row">
+              <span class="a1-ank-num">7</span>
+              <input type="number" inputmode="numeric" class="a1-ank-input ank-input-field" data-digit="7" placeholder="Enter Amount ₹" oninput="window.PlayerApp.calcGridTotal()">
+            </div>
+            <div class="a1-ank-row">
+              <span class="a1-ank-num">8</span>
+              <input type="number" inputmode="numeric" class="a1-ank-input ank-input-field" data-digit="8" placeholder="Enter Amount ₹" oninput="window.PlayerApp.calcGridTotal()">
+            </div>
+            <div class="a1-ank-row">
+              <span class="a1-ank-num">9</span>
+              <input type="number" inputmode="numeric" class="a1-ank-input ank-input-field" data-digit="9" placeholder="Enter Amount ₹" oninput="window.PlayerApp.calcGridTotal()">
+            </div>
+          </div>
+
+          <!-- Other Game Type Entry (Jodi, Panna, Motor, Sangam) -->
+          <div id="a1-custom-game-entry" style="display: none; padding: 0 0.85rem; margin-bottom: 0.85rem;">
+            <div style="background: #FFFFFF; border: 1.5px solid var(--border-card); border-radius: var(--radius-lg); padding: 1rem; box-shadow: 0 3px 10px rgba(180, 130, 40, 0.08);">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 0.75rem;">
+                <div>
+                  <label style="display:block; font-size:0.75rem; font-weight:700; color:#44403C; margin-bottom:0.3rem;">Enter Number / Jodi</label>
+                  <input type="text" id="bid-input-number" class="btn-chart" style="width:100%; padding:0.65rem; border-radius:var(--radius-md); font-family:var(--font-mono); font-size:1.15rem; font-weight:900; text-align:center; color:#1C1917; background:#FFFDF5; border:1.5px solid var(--border-card);" placeholder="Number" oninput="window.PlayerApp.updatePotentialPayoutPreview()">
+                </div>
+                <div>
+                  <label style="display:block; font-size:0.75rem; font-weight:700; color:#44403C; margin-bottom:0.3rem;">Points (₹)</label>
+                  <input type="number" id="bid-input-points" class="btn-chart" style="width:100%; padding:0.65rem; border-radius:var(--radius-md); font-family:var(--font-mono); font-size:1.15rem; font-weight:900; text-align:center; color:#1C1917; background:#FFFDF5; border:1.5px solid var(--border-card);" placeholder="Points" value="100" oninput="window.PlayerApp.updatePotentialPayoutPreview()">
+                </div>
+              </div>
+
+              <!-- Quick Points Chips -->
+              <div class="chips-row" style="margin-bottom: 0.85rem;">
+                <button type="button" class="chip-btn" onclick="window.PlayerApp.addChipPoints(10)">+10</button>
+                <button type="button" class="chip-btn" onclick="window.PlayerApp.addChipPoints(50)">+50</button>
+                <button type="button" class="chip-btn active" onclick="window.PlayerApp.addChipPoints(100)">+100</button>
+                <button type="button" class="chip-btn" onclick="window.PlayerApp.addChipPoints(500)">+500</button>
+                <button type="button" class="chip-btn" onclick="window.PlayerApp.addChipPoints(1000)">+1000</button>
+              </div>
+
+              <div id="bid-potential-payout" class="potential-payout-box" style="margin-bottom: 0.85rem; background: #FEF3C7; color: #78350F; border: 1px solid #FDE68A;">
+                <span>Potential Return:</span>
+                <b id="potential-win-val">950 Pts (9.5x)</b>
+              </div>
+
+              <button type="button" class="btn btn-chart btn-full" style="background: linear-gradient(180deg, #FDE68A 0%, #F59E0B 100%); color: #1C1917; font-weight: 800; border: 1.5px solid #D97706;" onclick="window.PlayerApp.addBetToCart()">
+                + Add to Bet Slip
+              </button>
+            </div>
+          </div>
+
+          <!-- Total Amount Card (Screen 3) -->
+          <div class="a1-total-amount-bar">
+            <div class="a1-total-left">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#D97706" stroke-width="2">
+                <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                <line x1="2" y1="10" x2="22" y2="10"></line>
+              </svg>
+              <span>TOTAL AMOUNT</span>
+            </div>
+            <div id="bidding-total-display" class="a1-total-val">₹ 0</div>
+          </div>
+
+          <!-- Action Buttons (Screen 3: PLACE BET & RESET) -->
+          <div class="a1-bidding-actions">
+            <button type="button" class="a1-btn-place-bet" onclick="window.PlayerApp.placeAnkGridBets()">
+              PLACE BET
+            </button>
+            <button type="button" class="a1-btn-reset" onclick="window.PlayerApp.resetAnkGrid()">
+              RESET
+            </button>
+          </div>
+
+          <!-- Collapsible Official Katta Bet Slip (when bets are queued) -->
+          <div id="cart-section" class="katta-bet-slip-card" style="margin: 0 0.85rem 1.5rem; display: none;">
+            <div class="katta-slip-header" style="background: #FFFDF5; border-bottom: 1.5px solid var(--border-card);">
+              <div>
+                <div class="katta-slip-title" style="color: #1C1917;">🎫 BET SLIP RECEIPT</div>
+                <div class="katta-slip-subtitle" style="color: #78716C;">A-ONE Verified Settlement</div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <span id="cart-count-badge" class="katta-count-badge" style="background: #FEF3C7; color: #78350F; border: 1px solid #FDE68A;">0 Bets</span>
+                <button type="button" class="katta-clear-btn" onclick="window.PlayerApp.clearCart()">Clear All</button>
+              </div>
+            </div>
+
+            <div style="overflow-x: auto;">
+              <table class="bet-slip-table">
+                <thead>
+                  <tr>
+                    <th>Number</th>
+                    <th>Game Type</th>
+                    <th>Session</th>
+                    <th>Points</th>
+                    <th>Win (₹)</th>
+                    <th style="text-align: right;">Action</th>
+                  </tr>
+                </thead>
+                <tbody id="cart-table-body">
+                  <tr><td colspan="6" style="text-align:center; color:var(--text-dim); padding: 1.5rem;">No bets added yet</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="katta-summary-box" style="background: #FFFDF5; border-top: 1.5px solid var(--border-card);">
+              <div class="katta-summary-row">
+                <span>Total Bets Placed:</span>
+                <b id="cart-count">0</b>
+              </div>
+              <div class="katta-summary-row">
+                <span>Total Staked Points:</span>
+                <b id="cart-total-points" style="font-size: 1.25rem; font-family: var(--font-mono); color: #D97706;">0 Pts</b>
+              </div>
+              <div class="katta-summary-row" style="border-top: 1px dashed rgba(229, 195, 120, 0.4); padding-top: 0.4rem; margin-top: 0.4rem;">
+                <span>Max Potential Return:</span>
+                <b id="cart-max-win" style="color: #15803D; font-family: var(--font-mono); font-size: 1.1rem;">0 Pts</b>
+              </div>
+            </div>
+
+            <button id="btn-submit-bids" class="btn btn-play btn-full" onclick="window.PlayerApp.submitBids()" style="font-size: 1rem; padding: 0.85rem; background: linear-gradient(180deg, #FDE68A 0%, #F59E0B 100%); color: #1C1917; font-weight: 900; border: 1.5px solid #D97706;">
+              🚀 Confirm & Place Bids
+            </button>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ============================================================
+           TAB 3: MY BIDS & BET SETTLEMENT HISTORY (STEP 5)
+           ============================================================ -->
+      <section id="tab-my-bids" style="display: none;">
+        <!-- Player Betting Summary Banner -->
+        <div class="bids-summary-banner">
+          <div class="bids-summary-item">
+            <span class="bids-summary-label">Total Placed</span>
+            <b id="my-bids-total-count" class="bids-summary-val">0</b>
+          </div>
+          <div class="bids-summary-item">
+            <span class="bids-summary-label">Total Staked</span>
+            <b id="my-bids-total-staked" class="bids-summary-val" style="color: var(--brand-amber);">0 Pts</b>
+          </div>
+          <div class="bids-summary-item">
+            <span class="bids-summary-label">Total Winnings</span>
+            <b id="my-bids-total-won" class="bids-summary-val" style="color: var(--accent-emerald);">0 Pts</b>
+          </div>
+        </div>
+
+        <!-- Filter Chips Bar -->
+        <div class="bids-filter-bar">
+          <button class="bids-chip-btn active" data-bfilter="ALL" onclick="window.PlayerApp.filterMyBids('ALL')">
+            All Bets
+          </button>
+          <button class="bids-chip-btn" data-bfilter="PENDING" onclick="window.PlayerApp.filterMyBids('PENDING')">
+            ⏳ Running
+          </button>
+          <button class="bids-chip-btn" data-bfilter="WON" onclick="window.PlayerApp.filterMyBids('WON')">
+            🏆 Won Only
+          </button>
+          <button class="bids-chip-btn" data-bfilter="LOST" onclick="window.PlayerApp.filterMyBids('LOST')">
+            ❌ Lost
+          </button>
+        </div>
+
+        <!-- Filter Sub-Row with Market Dropdown -->
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem;">
+          <select id="my-bids-market-filter" class="bids-market-select" onchange="window.PlayerApp.filterMyBidsByMarket(this.value)">
+            <option value="ALL">All Bazaars (सभी बाजार)</option>
+            <option value="kalyan">Kalyan</option>
+            <option value="milan_day">Milan Day</option>
+            <option value="milan_night">Milan Night</option>
+            <option value="rajdhani_day">Rajdhani Day</option>
+            <option value="main_bazar">Main Bazar</option>
+            <option value="time_bazar">Time Bazar</option>
+          </select>
+        </div>
+
+        <!-- Placed Bids List (Rendered as Official Katta Slips) -->
+        <div id="my-bids-list" class="bids-slips-container"></div>
+      </section>
+
+      <!-- ============================================================
+           TAB 4: WALLET & PASSBOOK
+           ============================================================ -->
+      <section id="tab-wallet" style="display: none;">
+        <div class="wallet-hero-card">
+          <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Available Points Balance</div>
+          <div id="wallet-tab-balance" class="wallet-balance-num">0 Pts</div>
+          <div class="wallet-quick-actions">
+            <button class="btn btn-emerald" onclick="window.PlayerApp.openDepositModal()">+ Add Points</button>
+            <button class="btn btn-chart" onclick="window.PlayerApp.openWithdrawModal()">Withdraw Pts</button>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin: 1.5rem 0 0.75rem;">
+          <h3 style="font-size: 1.05rem; font-weight: 800;">📖 Passbook Statement</h3>
+          <span style="font-size: 0.75rem; color: var(--text-dim);">Live Points Ledger</span>
+        </div>
+
+        <div id="passbook-list"></div>
+      </section>
+
+      <!-- ============================================================
+           TAB 5: CHARTS (AUTHENTIC JODI & PANEL CHARTS)
+           ============================================================ -->
+      <section id="tab-charts" style="display: none;">
+        <!-- Chart Controls Card -->
+        <div class="chart-controls-card">
+          <div class="chart-header-row">
+            <div>
+              <h3 class="chart-main-title">📊 Historical Record Charts</h3>
+              <div class="chart-sub-title">Authentic Kalyan 777 Weekly Panel &amp; Jodi Records</div>
+            </div>
+            <select id="chart-market-select" class="chart-market-dropdown" onchange="window.PlayerApp.onChartMarketChange(this.value)">
+              <option value="kalyan">👑 Kalyan Bazar</option>
+              <option value="milan_day">☀️ Milan Day</option>
+              <option value="milan_night">🌙 Milan Night</option>
+              <option value="rajdhani_day">🏛️ Rajdhani Day</option>
+              <option value="rajdhani_night">🌌 Rajdhani Night</option>
+              <option value="main_bazar">💎 Main Bazar</option>
+              <option value="time_bazar">⏰ Time Bazar</option>
+              <option value="sridevi">⭐ Sridevi</option>
+            </select>
+          </div>
+
+          <!-- Dual View Toggle: Jodi Chart vs Panel Chart -->
+          <div class="chart-view-toggle">
+            <button id="btn-chart-jodi" class="chart-toggle-btn active" onclick="window.PlayerApp.switchChartView('jodi')">
+              <span>🎯</span>
+              <span>Jodi Chart (जोड़ी)</span>
+            </button>
+            <button id="btn-chart-panel" class="chart-toggle-btn" onclick="window.PlayerApp.switchChartView('panel')">
+              <span>📋</span>
+              <span>Panel Chart (पैनल पाना)</span>
+            </button>
+          </div>
+
+          <!-- Legend Bar -->
+          <div class="chart-legend-bar">
+            <div class="legend-item">
+              <span class="legend-dot red-dot"></span>
+              <span class="legend-text"><b>Red Jodi (लाल जोड़ी):</b> Doubles (00..99) &amp; Cut Pairs (16, 27, 38, 49, 05)</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-dot normal-dot"></span>
+              <span class="legend-text"><b>Regular Jodi:</b> Standard Results</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Render Container -->
+        <div id="charts-container" class="charts-matrix-wrapper"></div>
+      </section>
+
+    </main>
+
+    <!-- Floating WhatsApp Support Button (hidden in favor of bottom nav WhatsApp item) -->
+    <a href="https://wa.me/9175764488" target="_blank" class="floating-wa-btn" style="display: none !important;" title="Contact Support on WhatsApp">
+      💬
+    </a>
+
+    <!-- Fixed Mobile Bottom Navigation Bar (Screen 1 Exact Match) -->
+    <nav class="player-bottom-nav a1-bottom-nav-bar">
+      <!-- 1. My bids (Gavel) -->
+      <button class="bottom-tab-btn a1-nav-item" data-tab="my-bids" onclick="window.PlayerApp.switchTab('my-bids')">
+        <span class="tab-icon">⚖️</span>
+        <span data-i18n="nav_bids">My bids</span>
+      </button>
+
+      <!-- 2. Passbook -->
+      <button class="bottom-tab-btn a1-nav-item" data-tab="wallet" onclick="window.PlayerApp.switchTab('wallet')">
+        <span class="tab-icon">📗</span>
+        <span data-i18n="nav_wallet">Passbook</span>
+      </button>
+
+      <!-- 3. Center Circular Action Button -->
+      <button class="a1-center-circle-btn" data-tab="home" onclick="window.PlayerApp.switchTab('home')" title="Home / Refresh Bazaars">
+        🔄
+        <span data-i18n="nav_home" style="display: none;">Home</span>
+      </button>
+
+      <!-- 4. Funds -->
+      <button class="bottom-tab-btn a1-nav-item" data-tab="funds" onclick="window.PlayerApp.openFundsModal()">
+        <span class="tab-icon">💰</span>
+        <span>Funds</span>
+      </button>
+
+      <!-- 5. WhatsApp -->
+      <a href="https://wa.me/9175764488" target="_blank" class="bottom-tab-btn a1-nav-item" style="text-decoration:none;">
+        <span class="tab-icon" style="color: #25D366;">💬</span>
+        <span>WhatsApp</span>
+      </a>
+    </nav>
+
+    <!-- ============================================================
+         SCREEN 4: BET PLACED CELEBRATION MODAL (EXACT MATCH)
+         ============================================================ -->
+    <div id="modal-bet-success" class="a1-success-modal" onclick="window.PlayerApp.closeSuccessModal()" title="Tap anywhere to continue">
+      <!-- Confetti elements -->
+      <div class="a1-confetti-piece" style="top: 8%; left: 12%; background: #F43F5E; transform: rotate(15deg);"></div>
+      <div class="a1-confetti-piece" style="top: 15%; left: 78%; background: #F59E0B; animation-delay: 0.3s; transform: rotate(-25deg);"></div>
+      <div class="a1-confetti-piece" style="top: 22%; left: 32%; background: #10B981; animation-delay: 0.7s; transform: rotate(45deg);"></div>
+      <div class="a1-confetti-piece" style="top: 18%; left: 88%; background: #EC4899; animation-delay: 1.1s;"></div>
+      <div class="a1-confetti-piece" style="top: 38%; left: 18%; background: #F59E0B; animation-delay: 0.5s; transform: rotate(30deg);"></div>
+      <div class="a1-confetti-piece" style="top: 32%; left: 62%; background: #EF4444; animation-delay: 1.5s;"></div>
+      <div class="a1-confetti-piece" style="top: 48%; left: 82%; background: #3B82F6; animation-delay: 0.9s;"></div>
+      <div class="a1-confetti-piece" style="top: 60%; left: 22%; background: #10B981; animation-delay: 1.3s;"></div>
+      <div class="a1-confetti-piece" style="top: 68%; left: 74%; background: #EF4444; animation-delay: 0.2s;"></div>
+      <div class="a1-confetti-piece" style="top: 75%; left: 45%; background: #F59E0B; animation-delay: 0.8s;"></div>
+      <div class="a1-confetti-piece" style="top: 82%; left: 15%; background: #8B5CF6; animation-delay: 1.6s;"></div>
+
+      <!-- Scalloped Green Checkmark Badge -->
+      <div class="a1-scalloped-badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+      </div>
+
+      <!-- Bold Celebration Message -->
+      <h2 class="a1-success-title" style="margin-top: 1.25rem; font-size: 1.6rem; font-weight: 900; color: #1C1917;">Bet Placed Successfully!</h2>
+      <div id="success-modal-desc" style="display: none;"></div>
+    </div>
+
+    <!-- ============================================================
+         SCREEN 5: LOGIN / REGISTER MODAL (EXACT A1 GAMES MATCH)
+         ============================================================ -->
+    <div id="modal-auth" class="modal-overlay">
+      <div class="a1-auth-container">
+        <!-- Top-Left & Bottom-Left Gold Corner Filigree Flourishes -->
+        <div class="filigree-tl"></div>
+        <div class="filigree-bl"></div>
+
+        <button type="button" class="a1-auth-close-btn" onclick="window.PlayerApp.closeModal('modal-auth')">✕</button>
+
+        <!-- Kalyan 777 Emblem Badge -->
+        <div class="a1-emblem-badge" style="background: #000; border: 2px solid #F5B800; border-radius: 16px; width: 88px; height: 88px; margin: 0 auto 1.25rem; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 6px 18px rgba(0,0,0,0.25);">
+          <img src="img/logo.png" alt="Kalyan 777" style="width: 48px; height: 48px; object-fit: contain; margin-bottom: 2px;">
+          <span style="font-size: 0.62rem; font-weight: 900; color: #F5B800; letter-spacing: 1px; text-transform: uppercase;">KALYAN 777</span>
+        </div>
+
+        <!-- Welcome Header -->
+        <div class="a1-login-title">― Welcome Back ―</div>
+        <div class="a1-login-sub">Login To continue your journey with Kalyan 777</div>
+
+        <!-- Official WhatsApp Support Pill -->
+        <a href="https://wa.me/9175764488" target="_blank" class="a1-whatsapp-pill">
+          <svg viewBox="0 0 24 24">
+            <path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.816 9.816 0 0 0 12.04 2z"/>
+          </svg>
+          <span>9175764488</span>
+        </a>
+
+        <!-- Login Form View -->
+        <div id="auth-form-login">
+          <!-- WhatsApp Number Input -->
+          <div class="a1-auth-input-group">
+            <span class="a1-auth-icon">📱</span>
+            <input type="tel" id="login-phone" class="a1-auth-input" placeholder="WHATSAPP NUMBER" value="9820145890">
+          </div>
+
+          <!-- Password / MPIN Input -->
+          <div class="a1-auth-input-group">
+            <span class="a1-auth-icon">🔒</span>
+            <input type="password" id="login-mpin" class="a1-auth-input" placeholder="PASSWORD" value="1234">
+          </div>
+
+          <!-- Log In Button -->
+          <button type="button" class="a1-btn-gold-submit" onclick="window.PlayerApp.handleLogin()">
+            <span>🚪</span>
+            <span>LOG IN</span>
+          </button>
+
+          <!-- New Register Button -->
+          <button type="button" class="a1-btn-register-secondary" onclick="window.PlayerApp.toggleAuthMode('register')">
+            <span>👤</span>
+            <span>NEW REGISTER</span>
+          </button>
+
+          <!-- Demo 1-Tap Logins for Instant Testing -->
+          <div class="a1-demo-accounts">
+            <small>⚡ 1-Tap Quick Demo Accounts:</small>
+            <div class="a1-demo-btns">
+              <button type="button" class="a1-demo-btn" onclick="window.PlayerApp.quickFillLogin('9820145890', '1234')">Ramesh (14.5k)</button>
+              <button type="button" class="a1-demo-btn" onclick="window.PlayerApp.quickFillLogin('9871234901', '1234')">Vijay (5.2k)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Register Form View -->
+        <div id="auth-form-register" style="display: none;">
+          <div class="a1-auth-input-group">
+            <span class="a1-auth-icon">👤</span>
+            <input type="text" id="reg-name" class="a1-auth-input" placeholder="FULL NAME">
+          </div>
+          <div class="a1-auth-input-group">
+            <span class="a1-auth-icon">📱</span>
+            <input type="tel" id="reg-phone" class="a1-auth-input" placeholder="WHATSAPP NUMBER">
+          </div>
+          <div class="a1-auth-input-group">
+            <span class="a1-auth-icon">🔒</span>
+            <input type="password" id="reg-mpin" maxlength="6" class="a1-auth-input" placeholder="CREATE PASSWORD">
+          </div>
+          <button type="button" class="a1-btn-gold-submit" onclick="window.PlayerApp.handleRegister()">
+            <span>👤</span>
+            <span>CREATE ACCOUNT</span>
+          </button>
+          <button type="button" class="a1-btn-register-secondary" onclick="window.PlayerApp.toggleAuthMode('login')">
+            <span>🚪</span>
+            <span>BACK TO LOGIN</span>
+          </button>
+        </div>
+
+        <!-- Trust Badges Row (Screen 5) -->
+        <div style="font-size: 0.72rem; color: #78716C; margin-top: 0.75rem;">― Don't have an account? ―</div>
+        <div class="a1-trust-grid">
+          <div class="a1-trust-col">
+            <span class="a1-trust-icon">🛡️</span>
+            <span class="a1-trust-label">100%<br>SAFE & TRUSTED</span>
+          </div>
+          <div class="a1-trust-col">
+            <span class="a1-trust-icon">⚡</span>
+            <span class="a1-trust-label">FAST<br>RESULTS</span>
+          </div>
+          <div class="a1-trust-col">
+            <span class="a1-trust-icon">💳</span>
+            <span class="a1-trust-label">INSTANT<br>WITHDRAWAL</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Deposit Modal (Add Points with Live Admin Payment Details) -->
+    <div id="modal-deposit" class="modal-overlay">
+      <div class="modal-box" style="max-width: 480px; max-height: 90vh; overflow-y: auto;">
+        <div class="modal-header">
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <span style="font-size:1.3rem;">💰</span>
+            <div>
+              <h3 style="font-size: 1.15rem; font-weight: 800; line-height: 1.2;">Add Points (Deposit)</h3>
+              <span style="font-size: 0.72rem; color: var(--brand-amber); font-weight: 600;">Live Admin Payment Gateway</span>
+            </div>
+          </div>
+          <button style="background:none; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;" onclick="window.PlayerApp.closeModal('modal-deposit')">✕</button>
+        </div>
+
+        <div class="modal-body" style="padding-top: 0.75rem;">
+
+          <!-- Admin Notice / Instructions Banner -->
+          <div id="dep-admin-notes-card" style="background: rgba(245, 158, 11, 0.08); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: var(--radius-md); padding: 0.75rem 0.85rem; margin-bottom: 0.85rem; font-size: 0.76rem; color: #fde68a; line-height: 1.45;">
+            <div style="font-weight: 700; color: var(--brand-amber); margin-bottom: 0.2rem; display: flex; align-items: center; gap: 0.35rem;">
+              <span>⚡</span> <span>Payment Instructions:</span>
+            </div>
+            <div id="dep-admin-notes-text">Pay using any UPI app or Bank transfer to the official admin account below. After payment, enter the 12-digit UTR number to get points instantly credited.</div>
+          </div>
+
+          <!-- Payment Methods Segmented Switcher -->
+          <div style="display: flex; gap: 0.4rem; background: rgba(255,255,255,0.05); padding: 0.3rem; border-radius: var(--radius-md); margin-bottom: 1rem;">
+            <button id="dep-tab-upi-btn" class="btn btn-sm" style="flex: 1; font-weight: 700; background: var(--brand-amber); color: #000;" onclick="window.PlayerApp.switchDepositTab('upi')">⚡ UPI & QR Code</button>
+            <button id="dep-tab-bank-btn" class="btn btn-sm" style="flex: 1; font-weight: 700; background: transparent; color: var(--text-muted);" onclick="window.PlayerApp.switchDepositTab('bank')">🏦 Bank IMPS / NEFT</button>
+          </div>
+
+          <!-- VIEW A: UPI & QR Code -->
+          <div id="dep-view-upi">
+            <!-- Dynamic QR Code Card -->
+            <div style="background: rgba(7, 10, 18, 0.85); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 1rem; text-align: center; margin-bottom: 1rem;">
+              <div style="background: #fff; padding: 10px; border-radius: 10px; display: inline-block; box-shadow: 0 4px 15px rgba(0,0,0,0.5); margin-bottom: 0.75rem;">
+                <img id="dep-qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=upi://pay?pa=kalyanboss@upi&pn=Kalyan777&cu=INR" alt="UPI QR Code" style="width: 170px; height: 170px; display: block;">
+              </div>
+              <div style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px;">Merchant / Payee Name:</div>
+              <div id="dep-payee-name" style="font-weight: 700; color: #fff; font-size: 0.95rem; margin-bottom: 0.4rem;">Kalyan 777 Official Services</div>
+              
+              <div style="font-size: 0.72rem; color: var(--text-dim); text-transform: uppercase;">Official Admin UPI ID (VPA):</div>
+              <div style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin: 0.25rem 0 0.5rem;">
+                <span id="dep-admin-upi" style="font-family: var(--font-mono); font-size: 1.1rem; font-weight: 800; color: var(--brand-amber);">kalyanboss@upi</span>
+                <button class="btn btn-chart" style="font-size: 0.75rem; padding: 0.25rem 0.6rem;" onclick="window.PlayerApp.copyText(document.getElementById('dep-admin-upi').textContent, 'UPI ID')">📋 Copy</button>
+              </div>
+            </div>
+
+            <!-- Quick App Numbers (PhonePe, GPay, Paytm) -->
+            <div id="dep-quick-apps-strip" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; margin-bottom: 1rem;">
+              <div style="background: rgba(14, 21, 38, 0.7); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 0.6rem 0.4rem; text-align: center;">
+                <div style="font-size: 0.68rem; color: #a78bfa; font-weight: 700;">PhonePe</div>
+                <div id="dep-phonepe-num" class="text-mono" style="font-size: 0.82rem; font-weight: 700; color: #fff; margin: 0.15rem 0;">9876543210</div>
+                <button class="btn btn-chart" style="font-size: 0.68rem; padding: 0.15rem 0.4rem; width: 100%;" onclick="window.PlayerApp.copyText(document.getElementById('dep-phonepe-num').textContent, 'PhonePe Number')">Copy</button>
+              </div>
+              <div style="background: rgba(14, 21, 38, 0.7); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 0.6rem 0.4rem; text-align: center;">
+                <div style="font-size: 0.68rem; color: #60a5fa; font-weight: 700;">Google Pay</div>
+                <div id="dep-gpay-num" class="text-mono" style="font-size: 0.82rem; font-weight: 700; color: #fff; margin: 0.15rem 0;">9876543210</div>
+                <button class="btn btn-chart" style="font-size: 0.68rem; padding: 0.15rem 0.4rem; width: 100%;" onclick="window.PlayerApp.copyText(document.getElementById('dep-gpay-num').textContent, 'Google Pay Number')">Copy</button>
+              </div>
+              <div style="background: rgba(14, 21, 38, 0.7); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 0.6rem 0.4rem; text-align: center;">
+                <div style="font-size: 0.68rem; color: #38bdf8; font-weight: 700;">Paytm</div>
+                <div id="dep-paytm-num" class="text-mono" style="font-size: 0.82rem; font-weight: 700; color: #fff; margin: 0.15rem 0;">9876543210</div>
+                <button class="btn btn-chart" style="font-size: 0.68rem; padding: 0.15rem 0.4rem; width: 100%;" onclick="window.PlayerApp.copyText(document.getElementById('dep-paytm-num').textContent, 'Paytm Number')">Copy</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- VIEW B: Direct IMPS Bank Transfer -->
+          <div id="dep-view-bank" style="display: none; margin-bottom: 1rem;">
+            <div style="background: rgba(7, 10, 18, 0.85); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 0.85rem;">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--border-subtle); padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+                <span style="font-size: 0.75rem; color: var(--text-dim);">Bank Name:</span>
+                <div style="display: flex; align-items: center; gap: 0.4rem;">
+                  <b id="dep-bank-name" style="font-size: 0.85rem; color: #fff;">HDFC Bank</b>
+                  <button class="btn btn-chart" style="font-size: 0.65rem; padding: 0.15rem 0.4rem;" onclick="window.PlayerApp.copyText(document.getElementById('dep-bank-name').textContent, 'Bank Name')">Copy</button>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--border-subtle); padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+                <span style="font-size: 0.75rem; color: var(--text-dim);">Account Number:</span>
+                <div style="display: flex; align-items: center; gap: 0.4rem;">
+                  <b id="dep-bank-acc" class="text-mono text-gold" style="font-size: 0.95rem;">50100492819234</b>
+                  <button class="btn btn-chart" style="font-size: 0.65rem; padding: 0.15rem 0.4rem;" onclick="window.PlayerApp.copyText(document.getElementById('dep-bank-acc').textContent, 'Account Number')">Copy</button>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--border-subtle); padding-bottom: 0.5rem; margin-bottom: 0.5rem;">
+                <span style="font-size: 0.75rem; color: var(--text-dim);">IFSC Code:</span>
+                <div style="display: flex; align-items: center; gap: 0.4rem;">
+                  <b id="dep-bank-ifsc" class="text-mono" style="font-size: 0.9rem; color: var(--accent-cyan);">HDFC0001245</b>
+                  <button class="btn btn-chart" style="font-size: 0.65rem; padding: 0.15rem 0.4rem;" onclick="window.PlayerApp.copyText(document.getElementById('dep-bank-ifsc').textContent, 'IFSC Code')">Copy</button>
+                </div>
+              </div>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <span style="font-size: 0.75rem; color: var(--text-dim);">Account Holder:</span>
+                <div style="display: flex; align-items: center; gap: 0.4rem;">
+                  <b id="dep-bank-holder" style="font-size: 0.85rem; color: #fff;">Kalyan 777 Official</b>
+                  <button class="btn btn-chart" style="font-size: 0.65rem; padding: 0.15rem 0.4rem;" onclick="window.PlayerApp.copyText(document.getElementById('dep-bank-holder').textContent, 'Account Holder Name')">Copy</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Points Selection -->
+          <div style="margin-bottom: 0.75rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem;">
+              <label style="font-size:0.75rem; color:var(--text-muted);">Points to Deposit (1 Pt = ₹1)</label>
+              <span id="dep-min-label" style="font-size: 0.7rem; color: var(--brand-amber);">Min: 100 Pts</span>
+            </div>
+            <input type="number" id="dep-points-input" class="btn-chart" style="width:100%; padding:0.65rem; border-radius:var(--radius-md); font-family:var(--font-mono); font-size:1.1rem; font-weight:800; color:#fff;" value="1000">
+          </div>
+
+          <div class="chips-row" style="margin-bottom: 0.85rem;">
+            <button class="chip-btn" onclick="document.getElementById('dep-points-input').value = '500'">500</button>
+            <button class="chip-btn active" onclick="document.getElementById('dep-points-input').value = '1000'">1000</button>
+            <button class="chip-btn" onclick="document.getElementById('dep-points-input').value = '2000'">2000</button>
+            <button class="chip-btn" onclick="document.getElementById('dep-points-input').value = '5000'">5000</button>
+          </div>
+
+          <!-- 12-Digit UTR Input -->
+          <div style="margin-bottom: 1.1rem;">
+            <label style="display:block; font-size:0.75rem; color:var(--text-muted); margin-bottom:0.3rem;">12-Digit UTR / Transaction Reference Number</label>
+            <input type="text" id="dep-utr-input" class="btn-chart" style="width:100%; padding:0.65rem; border-radius:var(--radius-md); font-family:var(--font-mono); font-size:1.05rem; letter-spacing:1.5px; color:var(--brand-amber);" placeholder="e.g. 428910294812" maxlength="22">
+            <span style="display:block; font-size:0.7rem; color:var(--text-dim); margin-top:0.25rem;">Found on your PhonePe, Google Pay, Paytm, or Bank transfer receipt.</span>
+          </div>
+
+          <button class="btn btn-emerald btn-full" onclick="window.PlayerApp.submitDeposit()">Submit Deposit Request</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Withdraw Modal -->
+    <div id="modal-withdraw" class="modal-overlay">
+      <div class="modal-box">
+        <div class="modal-header">
+          <h3 style="font-size: 1.15rem; font-weight: 800;">📤 Withdraw Points</h3>
+          <button style="background:none; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;" onclick="window.PlayerApp.closeModal('modal-withdraw')">✕</button>
+        </div>
+        <div class="modal-body">
+          <div style="margin-bottom: 0.85rem;">
+            <label style="display:block; font-size:0.75rem; color:var(--text-muted); margin-bottom:0.3rem;">Withdrawal Points (Min: 500 Pts)</label>
+            <input type="number" id="wit-points-input" class="btn-chart" style="width:100%; padding:0.65rem; border-radius:var(--radius-md); font-family:var(--font-mono); font-size:1.1rem; font-weight:800; color:#fff;" placeholder="Points to withdraw">
+          </div>
+
+          <div style="margin-bottom: 0.85rem;">
+            <label style="display:block; font-size:0.75rem; color:var(--text-muted); margin-bottom:0.3rem;">Payout Method</label>
+            <select id="wit-method-select" class="btn-chart" style="width:100%; padding:0.65rem; border-radius:var(--radius-md);">
+              <option value="UPI">UPI ID (Instant Transfer)</option>
+              <option value="Bank Transfer">Bank Transfer (IMPS)</option>
+            </select>
+          </div>
+
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display:block; font-size:0.75rem; color:var(--text-muted); margin-bottom:0.3rem;">Destination (UPI ID or Bank Account + IFSC)</label>
+            <input type="text" id="wit-destination-input" class="btn-chart" style="width:100%; padding:0.65rem; border-radius:var(--radius-md);" placeholder="e.g. yourname@okhdfcbank">
+          </div>
+
+          <button class="btn btn-play btn-full" onclick="window.PlayerApp.submitWithdrawal()">Request Withdrawal</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Game Rules & Bhaav Rates Modal -->
+    <div id="modal-game-rules" class="modal-overlay">
+      <div class="modal-box" style="max-width: 480px;">
+        <div class="modal-header">
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <span style="font-size:1.3rem;">📜</span>
+            <div>
+              <h3 style="font-size: 1.15rem; font-weight: 800; line-height: 1.2;">Game Rates & Bhaav</h3>
+              <span style="font-size: 0.72rem; color: var(--brand-amber); font-weight: 600;">Kalyan 777 Official Payout Standard</span>
+            </div>
+          </div>
+          <button style="background:none; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;" onclick="window.PlayerApp.closeModal('modal-game-rules')">✕</button>
+        </div>
+        <div class="modal-body" style="padding-top: 0.75rem;">
+          <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.85rem; line-height: 1.4;">
+            All payouts are credited in points instantly to your wallet immediately after live bazaar result declaration.
+          </div>
+
+          <div class="bhaav-rates-table-wrap">
+            <table class="bhaav-rates-table">
+              <thead>
+                <tr>
+                  <th>Game Type (खेल)</th>
+                  <th>Hindi Name</th>
+                  <th>Rate / भाव</th>
+                  <th>Payout Multiplier</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><b>Single Digit</b></td>
+                  <td>सिंगल अंक</td>
+                  <td><span class="rate-tag">10 ka 95</span></td>
+                  <td><b>9.5x</b></td>
+                </tr>
+                <tr>
+                  <td><b>Jodi Digit</b></td>
+                  <td>जोड़ी अंक</td>
+                  <td><span class="rate-tag">10 ka 950</span></td>
+                  <td><b>95x</b></td>
+                </tr>
+                <tr>
+                  <td><b>Single Patti (SP)</b></td>
+                  <td>सिंगल पत्ती</td>
+                  <td><span class="rate-tag">10 ka 1,400</span></td>
+                  <td><b>140x</b></td>
+                </tr>
+                <tr>
+                  <td><b>Double Patti (DP)</b></td>
+                  <td>डबल पत्ती</td>
+                  <td><span class="rate-tag">10 ka 2,800</span></td>
+                  <td><b>280x</b></td>
+                </tr>
+                <tr>
+                  <td><b>Triple Patti (TP)</b></td>
+                  <td>ट्रिपल पत्ती</td>
+                  <td><span class="rate-tag">10 ka 7,000</span></td>
+                  <td><b>700x</b></td>
+                </tr>
+                <tr>
+                  <td><b>Half Sangam</b></td>
+                  <td>हाफ संगम</td>
+                  <td><span class="rate-tag highlight">10 ka 10,000</span></td>
+                  <td><b>1,000x</b></td>
+                </tr>
+                <tr>
+                  <td><b>Full Sangam</b></td>
+                  <td>फुल संगम</td>
+                  <td><span class="rate-tag jackpot">10 ka 1,00,000</span></td>
+                  <td><b>10,000x</b></td>
+                </tr>
+                <tr>
+                  <td><b>SP Motor / DP Motor</b></td>
+                  <td>मोटर पत्ती</td>
+                  <td><span class="rate-tag">10 ka 1,400 / 2,800</span></td>
+                  <td><b>140x / 280x</b></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div style="background: rgba(7, 10, 18, 0.7); border: 1px dashed var(--border-subtle); border-radius: var(--radius-md); padding: 0.85rem; margin-top: 1rem; font-size: 0.74rem; color: var(--text-dim); line-height: 1.5;">
+            <div>📌 <b>Minimum Bid:</b> 10 Points | <b>Maximum Bid:</b> 50,000 Points per number.</div>
+            <div>📌 <b>Cut Ank Rule:</b> 0-5, 1-6, 2-7, 3-8, 4-9. Doubles or cut digits form a <b>Red Jodi (लाल जोड़ी)</b>.</div>
+            <div>📌 <b>Withdrawals:</b> 24x7 instant UPI / IMPS payouts with zero deductions.</div>
+          </div>
+
+          <button class="btn btn-play btn-full" style="margin-top: 1rem;" onclick="window.PlayerApp.closeModal('modal-game-rules')">I Understand • Back to App</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Change Security MPIN Modal -->
+    <div id="modal-change-mpin" class="modal-overlay">
+      <div class="modal-box">
+        <div class="modal-header">
+          <div style="display:flex; align-items:center; gap:0.5rem;">
+            <span style="font-size:1.3rem;">🔒</span>
+            <div>
+              <h3 style="font-size: 1.15rem; font-weight: 800; line-height: 1.2;">Change Security MPIN</h3>
+              <span style="font-size: 0.72rem; color: var(--text-muted);">Update your 4-digit login passcode</span>
+            </div>
+          </div>
+          <button style="background:none; border:none; color:var(--text-muted); font-size:1.5rem; cursor:pointer;" onclick="window.PlayerApp.closeModal('modal-change-mpin')">✕</button>
+        </div>
+        <div class="modal-body">
+          <div style="margin-bottom: 0.85rem;">
+            <label style="display:block; font-size:0.75rem; color:var(--text-muted); margin-bottom:0.3rem;">Current 4-Digit MPIN</label>
+            <input type="password" id="mpin-old-input" maxlength="4" class="btn-chart" style="width:100%; padding:0.65rem; border-radius:var(--radius-md); font-family:var(--font-mono); font-size:1.1rem; letter-spacing:4px; text-align:center; color:#fff;" placeholder="****">
+          </div>
+
+          <div style="margin-bottom: 0.85rem;">
+            <label style="display:block; font-size:0.75rem; color:var(--text-muted); margin-bottom:0.3rem;">New 4-Digit MPIN</label>
+            <input type="password" id="mpin-new-input" maxlength="4" class="btn-chart" style="width:100%; padding:0.65rem; border-radius:var(--radius-md); font-family:var(--font-mono); font-size:1.1rem; letter-spacing:4px; text-align:center; color:var(--brand-amber);" placeholder="****">
+          </div>
+
+          <div style="margin-bottom: 1.25rem;">
+            <label style="display:block; font-size:0.75rem; color:var(--text-muted); margin-bottom:0.3rem;">Confirm New 4-Digit MPIN</label>
+            <input type="password" id="mpin-confirm-input" maxlength="4" class="btn-chart" style="width:100%; padding:0.65rem; border-radius:var(--radius-md); font-family:var(--font-mono); font-size:1.1rem; letter-spacing:4px; text-align:center; color:var(--brand-amber);" placeholder="****">
+          </div>
+
+          <button class="btn btn-play btn-full" onclick="window.PlayerApp.submitChangeMpin()">Update Security MPIN</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Backdrop Overlay for Drawer -->
+    <div id="drawer-backdrop" class="drawer-backdrop" onclick="window.PlayerApp.closeDrawer()"></div>
+
+    <!-- Sliding User Profile Drawer -->
+    <aside id="player-drawer" class="player-drawer">
+      <!-- Drawer Header with Close Button -->
+      <div class="drawer-header">
+        <div class="drawer-brand">
+          <img src="img/logo.png" alt="Kalyan 777" class="drawer-logo-img">
+          <div>
+            <h3 class="drawer-brand-title">KALYAN 777</h3>
+            <span class="drawer-brand-tag">OFFICIAL GAMING APP</span>
+          </div>
+        </div>
+        <button class="drawer-close-btn" onclick="window.PlayerApp.closeDrawer()" aria-label="Close Menu">✕</button>
+      </div>
+
+      <!-- User Profile Card -->
+      <div class="drawer-profile-card">
+        <div class="drawer-avatar-wrap">
+          <div class="drawer-avatar-circle" id="drawer-avatar-initials">RP</div>
+          <div class="drawer-user-info">
+            <div class="drawer-user-name" id="drawer-user-name">Ramesh Patel</div>
+            <div class="drawer-user-phone" id="drawer-user-phone">+91 98201 45890</div>
+            <span class="drawer-user-status" id="drawer-user-status">● ACTIVE VIP PLAYER</span>
+          </div>
+        </div>
+
+        <div class="drawer-wallet-box">
+          <div>
+            <div class="drawer-wallet-label">Available Points Balance</div>
+            <div class="drawer-wallet-pts" id="drawer-wallet-pts">14,500 Pts</div>
+          </div>
+          <button class="drawer-add-pts-btn" onclick="window.PlayerApp.closeDrawer(); window.PlayerApp.openDepositModal();">+ Add Pts</button>
+        </div>
+      </div>
+
+      <!-- Quick Action Grid -->
+      <div class="drawer-quick-actions">
+        <button class="drawer-quick-btn" onclick="window.PlayerApp.closeDrawer(); window.PlayerApp.openDepositModal();">
+          <span class="quick-icon">💰</span>
+          <span>Add Points</span>
+        </button>
+        <button class="drawer-quick-btn" onclick="window.PlayerApp.closeDrawer(); window.PlayerApp.openWithdrawModal();">
+          <span class="quick-icon">📤</span>
+          <span>Withdraw</span>
+        </button>
+        <button class="drawer-quick-btn" onclick="window.PlayerApp.closeDrawer(); window.PlayerApp.openGameRulesModal();">
+          <span class="quick-icon">📜</span>
+          <span>Game Rates</span>
+        </button>
+      </div>
+
+      <!-- Drawer Menu Navigation List -->
+      <div class="drawer-nav-list">
+        <div class="drawer-section-title">GAMING & CHARTS</div>
+        <a href="javascript:void(0)" class="drawer-nav-item" onclick="window.PlayerApp.closeDrawer(); window.PlayerApp.switchTab('home');">
+          <span class="drawer-nav-icon">🏠</span>
+          <div class="drawer-nav-text">
+            <span>Home Bazaars</span>
+            <small>Live markets & Starline draws</small>
+          </div>
+          <span class="drawer-chevron">›</span>
+        </a>
+        <a href="javascript:void(0)" class="drawer-nav-item" onclick="window.PlayerApp.closeDrawer(); window.PlayerApp.switchTab('my-bids');">
+          <span class="drawer-nav-icon">📜</span>
+          <div class="drawer-nav-text">
+            <span>My Bids (सट्टा पर्ची)</span>
+            <small>Katta slip receipts & history</small>
+          </div>
+          <span class="drawer-chevron">›</span>
+        </a>
+        <a href="javascript:void(0)" class="drawer-nav-item" onclick="window.PlayerApp.closeDrawer(); window.PlayerApp.switchTab('wallet');">
+          <span class="drawer-nav-icon">💳</span>
+          <div class="drawer-nav-text">
+            <span>Points Passbook</span>
+            <small>Deposit & withdrawal ledger</small>
+          </div>
+          <span class="drawer-chevron">›</span>
+        </a>
+        <a href="javascript:void(0)" class="drawer-nav-item" onclick="window.PlayerApp.closeDrawer(); window.PlayerApp.switchTab('charts');">
+          <span class="drawer-nav-icon">📊</span>
+          <div class="drawer-nav-text">
+            <span>Jodi & Panel Charts</span>
+            <small>Red Jodi & Patti records</small>
+          </div>
+          <span class="drawer-chevron">›</span>
+        </a>
+
+        <div class="drawer-section-title">PREFERENCES & SECURITY</div>
+        <div class="drawer-nav-item" style="cursor: default;">
+          <span class="drawer-nav-icon">🔊</span>
+          <div class="drawer-nav-text">
+            <span data-i18n="drawer_sound">Sound & Haptic FX</span>
+            <small data-i18n="drawer_sound_sub">Keypad click & win chimes</small>
+          </div>
+          <label class="drawer-switch">
+            <input type="checkbox" id="drawer-sound-toggle" checked onchange="window.PlayerApp.toggleSound(this.checked)">
+            <span class="drawer-slider"></span>
+          </label>
+        </div>
+        <div class="drawer-nav-item" onclick="window.PlayerApp.toggleLanguage()">
+          <span class="drawer-nav-icon">🌐</span>
+          <div class="drawer-nav-text">
+            <span data-i18n="drawer_lang">Language / भाषा</span>
+            <small id="drawer-lang-status">हिन्दी (Hindi) सक्रिय</small>
+          </div>
+          <span class="badge badge-gold" id="drawer-lang-badge" style="font-size: 0.72rem; padding: 0.2rem 0.5rem;">हिन्दी</span>
+        </div>
+        <a href="javascript:void(0)" class="drawer-nav-item" onclick="window.PlayerApp.closeDrawer(); window.PlayerApp.openChangeMpinModal();">
+          <span class="drawer-nav-icon">🔒</span>
+          <div class="drawer-nav-text">
+            <span>Change Security MPIN</span>
+            <small>Update 4-digit PIN</small>
+          </div>
+          <span class="drawer-chevron">›</span>
+        </a>
+        <a href="javascript:void(0)" class="drawer-nav-item" onclick="window.PlayerApp.closeDrawer(); window.PlayerApp.openGameRulesModal();">
+          <span class="drawer-nav-icon">⚖️</span>
+          <div class="drawer-nav-text">
+            <span>Rules & Bhaav Rates</span>
+            <small>Game payout multipliers</small>
+          </div>
+          <span class="drawer-chevron">›</span>
+        </a>
+
+        <div class="drawer-section-title">VIP SUPPORT & APP</div>
+        <a href="https://wa.me/919999999999?text=Hello%20Kalyan%20777%20Support" target="_blank" class="drawer-nav-item">
+          <span class="drawer-nav-icon" style="color: #25d366;">💬</span>
+          <div class="drawer-nav-text">
+            <span>24x7 WhatsApp VIP Support</span>
+            <small>Instant points help & deposits</small>
+          </div>
+          <span class="drawer-chevron">›</span>
+        </a>
+        <div id="drawer-install-pwa-item" class="drawer-nav-item" onclick="window.PlayerApp.triggerPwaInstall()">
+          <span class="drawer-nav-icon">📲</span>
+          <div class="drawer-nav-text">
+            <span>Install App on Phone</span>
+            <small>Fast standalone home-screen app</small>
+          </div>
+          <span class="drawer-chevron">›</span>
+        </div>
+        <a href="javascript:void(0)" id="drawer-auth-action" class="drawer-nav-item drawer-nav-logout" onclick="window.PlayerApp.handleDrawerAuthAction();">
+          <span class="drawer-nav-icon">🚪</span>
+          <div class="drawer-nav-text">
+            <span id="drawer-auth-action-text">Logout Account</span>
+            <small>Exit current player session</small>
+          </div>
+          <span class="drawer-chevron">›</span>
+        </a>
+      </div>
+
+      <!-- Drawer Footer -->
+      <div class="drawer-footer">
+        <div class="drawer-app-version">Kalyan 777 Official v2.4 (Build 777-PRO)</div>
+        <div class="drawer-app-secure">🔒 256-Bit SSL Encrypted Gaming Engine</div>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>

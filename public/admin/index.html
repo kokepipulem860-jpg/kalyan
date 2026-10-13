@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>KALYAN 777 | Executive Satta Matka Admin Control Center</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/variables.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+
+  <!-- Toast Notification System -->
+  <div id="toast-container"></div>
+
+  <!-- Mobile Sidebar Backdrop Overlay -->
+  <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+  <!-- Main App Shell -->
+  <div class="app-wrapper">
+
+    <!-- SIDEBAR NAVIGATION (Desktop Fixed, Mobile Drawer) -->
+    <aside id="app-sidebar" class="app-sidebar">
+      <div class="sidebar-header">
+        <a href="#" class="brand-badge">
+          <img src="img/logo.png" alt="Kalyan 777" class="admin-brand-logo-img">
+          <div class="brand-text">
+            <h1>KALYAN 777</h1>
+            <span>EXECUTIVE ADMIN</span>
+          </div>
+        </a>
+        <button id="sidebar-close-btn" class="sidebar-close-btn" aria-label="Close Sidebar">✕</button>
+      </div>
+
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Operations</div>
+        
+        <a href="#" class="nav-item active" data-tab="dashboard">
+          <span class="nav-icon">📊</span>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="#" class="nav-item" data-tab="markets">
+          <span class="nav-icon">🎲</span>
+          <span>Bazaars & Markets</span>
+        </a>
+
+        <a href="#" class="nav-item" data-tab="declare">
+          <span class="nav-icon">🏆</span>
+          <span>Declare Results</span>
+          <span class="nav-badge" style="background: var(--brand-gold); color: #070a11;">NEW</span>
+        </a>
+
+        <a href="#" class="nav-item" data-tab="cutting">
+          <span class="nav-icon">📈</span>
+          <span>Cutting Sheet (Risk)</span>
+        </a>
+
+        <a href="#" class="nav-item" data-tab="bids">
+          <span class="nav-icon">📜</span>
+          <span>Live Bids History</span>
+        </a>
+
+        <div class="nav-section-title">Finance & Users</div>
+
+        <a href="#" class="nav-item" data-tab="agents">
+          <span class="nav-icon">🤝</span>
+          <span>Agents & Khaiwals</span>
+          <span class="nav-badge" style="background: var(--brand-gold); color: #070a11;">NEW</span>
+        </a>
+
+        <a href="#" class="nav-item" data-tab="users">
+          <span class="nav-icon">👥</span>
+          <span>User Management</span>
+        </a>
+
+        <a href="#" class="nav-item" data-tab="wallet">
+          <span class="nav-icon">💳</span>
+          <span>Wallet & Funds</span>
+          <span class="nav-badge">10</span>
+        </a>
+
+        <a href="#" class="nav-item" data-tab="rates">
+          <span class="nav-icon">⚖️</span>
+          <span>Game Rates (Bhav)</span>
+        </a>
+
+        <div class="nav-section-title">System & Security</div>
+
+        <a href="#" class="nav-item" data-tab="settings">
+          <span class="nav-icon">📢</span>
+          <span>Notice & Settings</span>
+        </a>
+
+        <a href="#" class="nav-item" data-tab="logs">
+          <span class="nav-icon">🛡️</span>
+          <span>Audit Logs</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="operator-card">
+          <div class="operator-avatar" id="operator-avatar">SA</div>
+          <div class="operator-info">
+            <div class="operator-name" id="operator-name">Super Admin</div>
+            <div class="operator-role" id="operator-role-badge">👑 UNLIMITED MINT</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN VIEWPORT -->
+    <main class="app-main">
+      
+      <!-- Top Sticky App Header -->
+      <header class="app-header">
+        <div class="header-left">
+          <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Open Navigation Menu">☰</button>
+          <div class="page-title-box">
+            <h2 id="page-title">Admin Mission Control</h2>
+            <p id="page-subtitle">Real-time overview of markets, bids and live operations</p>
+          </div>
+        </div>
+
+        <div class="header-right">
+          <div class="live-status-pill" id="admin-quota-pill" style="border-color: rgba(245, 158, 11, 0.4);">
+            <span class="live-indicator" style="background: var(--brand-gold);"></span>
+            <span id="admin-quota-text" style="color: var(--brand-gold); font-weight: 700;">UNLIMITED MINT</span>
+          </div>
+
+          <div id="server-clock" class="server-clock">Loading Clock...</div>
+
+          <div class="header-quick-actions">
+            <button class="btn btn-sm btn-primary" onclick="window.App.switchTab('declare')">
+              ⚡ Declare
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content Dynamic Container -->
+      <div class="content-container">
+
+        <!-- ================================================================
+             TAB 1: DASHBOARD
+             ================================================================ -->
+        <section id="tab-dashboard">
+          <!-- Pending Action Alerts Banner -->
+          <div id="dash-alerts-strip"></div>
+
+          <!-- KPI Metric Cards Grid -->
+          <div id="dash-stats-grid" class="stats-grid"></div>
+
+          <!-- Live Running Markets Row -->
+          <div class="card-panel">
+            <div class="panel-header">
+              <h3><span>🎲</span> Live Active Bazaars (Open Now)</h3>
+              <button class="btn btn-sm btn-outline" onclick="window.App.switchTab('markets')">All Markets →</button>
+            </div>
+            <div id="dash-active-markets" class="markets-grid" style="margin-bottom: 0;"></div>
+          </div>
+
+          <!-- Live Bids Stream -->
+          <div class="card-panel">
+            <div class="panel-header">
+              <h3><span>⚡</span> Real-Time Bids Feed</h3>
+              <button class="btn btn-sm btn-outline" onclick="window.App.switchTab('bids')">Full Bid History →</button>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Bid ID</th>
+                    <th>Player</th>
+                    <th>Market</th>
+                    <th>Game Type</th>
+                    <th>Digit / Pana</th>
+                    <th>Amount</th>
+                    <th>Status</th>
+                    <th>Time</th>
+                  </tr>
+                </thead>
+                <tbody id="dash-recent-bids-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             TAB 2: MARKETS MANAGEMENT
+             ================================================================ -->
+        <section id="tab-markets" style="display: none;">
+          <div class="card-panel">
+            <div class="panel-header">
+              <h3><span>🎲</span> Regular Bazaars (Kalyan, Milan, Rajdhani, etc.)</h3>
+              <button class="btn btn-sm btn-primary" onclick="window.App.openAddNewMarketModal()">+ Add New Bazaar</button>
+            </div>
+            <div id="markets-list-grid" class="markets-grid"></div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 1.5rem;">
+            <!-- Starline Markets Table -->
+            <div class="card-panel">
+              <div class="panel-header">
+                <h3><span>⭐</span> Kalyan Starline (Hourly Draws)</h3>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Draw Time</th>
+                      <th>Time</th>
+                      <th>Declared Result</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="starline-table-body"></tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- King / Gali Disawar Table -->
+            <div class="card-panel">
+              <div class="panel-header">
+                <h3><span>👑</span> King Markets (Gali, Disawar, etc.)</h3>
+              </div>
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>Bazaar</th>
+                      <th>Time</th>
+                      <th>Jodi Result</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="king-table-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             TAB 3: DECLARE RESULT & SETTLEMENT ENGINE
+             ================================================================ -->
+        <section id="tab-declare" style="display: none;">
+          <div class="declare-board">
+            <div class="declare-board-header">
+              <h3>⚡ Official Result Declaration & Auto-Settlement</h3>
+              <p style="color: var(--text-muted); font-size: 0.9rem; margin-top: 0.25rem;">
+                Enter the 3-digit Patti. The single digit is computed automatically. Winners are credited instantaneously.
+              </p>
+            </div>
+
+            <!-- Visual Live Result Preview -->
+            <div class="result-live-preview">
+              <div class="result-box-group">
+                <span class="result-box-title">Open Patti</span>
+                <div id="preview-open-panna" class="result-display-pill">128</div>
+              </div>
+
+              <div class="result-box-group">
+                <span class="result-box-title">Jodi</span>
+                <div id="preview-jodi" class="result-display-pill jodi-center">1*</div>
+              </div>
+
+              <div class="result-box-group">
+                <span class="result-box-title">Close Patti</span>
+                <div id="preview-close-panna" class="result-display-pill">***</div>
+              </div>
+            </div>
+
+            <div style="text-align: center; margin-bottom: 1.5rem;">
+              <span id="ank-calc-badge" class="panna-sum-badge" style="display: none;"></span>
+            </div>
+
+            <!-- Declaration Input Form -->
+            <div class="declare-form-grid">
+              <div class="form-group">
+                <label class="form-label">Select Market / Bazaar</label>
+                <select id="declare-market-select" class="form-control"></select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Session</label>
+                <select id="declare-session-select" class="form-control">
+                  <option value="OPEN">OPEN SESSION (Pana & Open Ank)</option>
+                  <option value="CLOSE">CLOSE SESSION (Pana & Close Ank + Jodi)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Enter 3-Digit Patti (e.g. 128, 234, 118)</label>
+                <input type="text" id="declare-panna-input" class="form-control text-mono font-bold" maxlength="3" placeholder="3 Digits" style="font-size: 1.25rem; letter-spacing: 2px;">
+              </div>
+            </div>
+
+            <div class="flex-center" style="gap: 1rem;">
+              <button id="btn-submit-declare" class="btn btn-lg btn-primary">
+                ⚡ Declare Result & Distribute Winnings
+              </button>
+            </div>
+          </div>
+
+          <!-- Historical Result Log Table -->
+          <div class="card-panel">
+            <div class="panel-header">
+              <h3><span>📜</span> Today's Declared Results & Payout Ledger</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Log ID</th>
+                    <th>Market</th>
+                    <th>Session</th>
+                    <th>Result (Pana - Ank)</th>
+                    <th>Winners Credited</th>
+                    <th>Total Payout</th>
+                    <th>Operator</th>
+                    <th>Declared Time</th>
+                  </tr>
+                </thead>
+                <tbody id="result-logs-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             TAB 4: CUTTING SHEET & BOOKIE LOAD MATRIX
+             ================================================================ -->
+        <section id="tab-cutting" style="display: none;">
+          <!-- Bookie High Risk Warning Banner -->
+          <div class="cutting-banner">
+            <div class="cutting-banner-text">
+              <h4><span>⚠️</span> Bookie Risk Analysis & Exposure Heatmap</h4>
+              <p>
+                Real-time liability tracker. Identifies which digits have excessive bet volume to prevent bookmaker deficit.
+              </p>
+            </div>
+            <div style="font-size: 0.95rem; text-align: right;">
+              <span style="color: var(--text-dim); display: block; font-size: 0.75rem;">Total Round Collection:</span>
+              <b id="cutting-total-collected" class="text-gold text-mono" style="font-size: 1.5rem;">₹0</b>
+            </div>
+          </div>
+
+          <!-- Controls Bar -->
+          <div class="cutting-controls-bar">
+            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <label class="form-label" style="margin: 0;">Market:</label>
+                <select id="cutting-market-select" class="form-control" style="width: 180px;"></select>
+              </div>
+
+              <div id="cutting-session-control" class="segmented-control">
+                <button class="segmented-btn active" data-session="OPEN" onclick="window.App.setCuttingSession('OPEN')">Open Session</button>
+                <button class="segmented-btn" data-session="CLOSE" onclick="window.App.setCuttingSession('CLOSE')">Close Session</button>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 0.5rem;">
+              <span class="badge badge-emerald">🟢 Safe Margin</span>
+              <span class="badge badge-rose">🔴 Heavy Loss</span>
+            </div>
+          </div>
+
+          <!-- Syndicate Risk & Lay-Off Controls Bar -->
+          <div class="syndicate-layoff-bar card-panel" style="margin-bottom: 1.5rem; padding: 1rem 1.25rem;">
+            <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.75rem;">
+              <div style="display: flex; align-items: center; gap: 0.6rem;">
+                <span style="font-size: 1.35rem;">🛡️</span>
+                <div>
+                  <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--text-main); margin: 0;">Syndicate Risk Lay-Off (कटिंग / ले-ऑफ)</h4>
+                  <small style="color: var(--text-dim); font-size: 0.72rem;">Set bookie retention ceiling to calculate excess load to lay off to external syndicates</small>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div style="display: flex; gap: 0.6rem; flex-wrap: wrap;">
+                <button type="button" class="btn btn-sm btn-outline-gold" onclick="window.App.copyWhatsAppLayoff()" title="Copy formatted text slip for WhatsApp syndicate dispatch">
+                  <span>📋 Copy WhatsApp Layoff</span>
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-cyan" onclick="window.App.downloadLayoffCSV()" title="Download CSV table of excess volume">
+                  <span>📥 Download CSV</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Retention Ceiling Inputs & Stats -->
+            <div style="display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; padding-top: 0.75rem; border-top: 1px solid var(--border-subtle);">
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <label for="cutting-ank-limit" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700;">Ank Limit (₹):</label>
+                <input type="number" id="cutting-ank-limit" class="form-control text-mono font-bold" value="5000" min="0" step="500" style="width: 105px; padding: 0.3rem 0.5rem; font-size: 0.85rem;" onchange="window.App.onLayoffLimitChange()">
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <label for="cutting-jodi-limit" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700;">Jodi Limit (₹):</label>
+                <input type="number" id="cutting-jodi-limit" class="form-control text-mono font-bold" value="2000" min="0" step="500" style="width: 105px; padding: 0.3rem 0.5rem; font-size: 0.85rem;" onchange="window.App.onLayoffLimitChange()">
+              </div>
+
+              <!-- Layoff Stats Preview Badges -->
+              <div id="layoff-stats-pills" style="display: flex; gap: 0.6rem; margin-left: auto; align-items: center; flex-wrap: wrap;">
+                <span class="badge badge-neutral" id="layoff-excess-digits-badge">0 Digits Over Limit</span>
+                <span class="badge badge-neutral" id="layoff-total-stake-badge">Layoff Stake: ₹0</span>
+                <span class="badge badge-emerald" id="layoff-protection-badge">🛡️ Protected: ₹0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Digits 0 to 9 Load Cards -->
+          <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-secondary);">
+            Single Digit Load (0 - 9)
+          </h4>
+          <div id="digit-load-container" class="digit-load-grid"></div>
+
+          <!-- Top Exposure Jodis List & 100 Jodi Matrix -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+            <div class="card-panel">
+              <div class="panel-header">
+                <h3><span>🔥</span> Top 10 High Exposure Jodis</h3>
+              </div>
+              <div id="top-jodis-list"></div>
+            </div>
+
+            <div class="jodi-matrix-wrap">
+              <div class="panel-header">
+                <h3><span>📊</span> Jodi 00 - 99 Real-Time Heatmap</h3>
+                <span style="font-size: 0.75rem; color: var(--text-muted);">Red = High Exposure</span>
+              </div>
+              <div id="jodi-matrix-grid" class="jodi-matrix-grid"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             TAB 5: BIDS HISTORY
+             ================================================================ -->
+        <section id="tab-bids" style="display: none;">
+          <div class="card-panel">
+            <div class="panel-header">
+              <h3><span>📜</span> Player Bids & Bet Management</h3>
+              <div class="search-input-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="bids-search-input" class="form-control" placeholder="Search by User, Market or ID...">
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Bid ID</th>
+                    <th>Player</th>
+                    <th>Market</th>
+                    <th>Game Type</th>
+                    <th>Session</th>
+                    <th>Number</th>
+                    <th>Points (₹)</th>
+                    <th>Potential Win</th>
+                    <th>Status</th>
+                    <th>Placed Time</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="bids-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             TAB: AGENTS & KHAIWALS HIERARCHY NETWORK
+             ================================================================ -->
+        <section id="tab-agents" style="display: none;">
+          <!-- Top KPI metrics for Agent Network -->
+          <div class="metrics-grid" style="margin-bottom: 1.5rem;">
+            <div class="stat-card">
+              <div class="stat-icon" style="background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald);">🤝</div>
+              <div class="stat-info">
+                <span class="stat-label">Active Khaiwals</span>
+                <h3 id="agents-count-stat" class="stat-value">0</h3>
+                <span class="stat-sub">Retail Network</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan);">👥</div>
+              <div class="stat-info">
+                <span class="stat-label">Downstream Players</span>
+                <h3 id="agents-players-stat" class="stat-value">0</h3>
+                <span class="stat-sub">Managed Clients</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background: rgba(245, 158, 11, 0.15); color: var(--brand-gold);">💰</div>
+              <div class="stat-info">
+                <span class="stat-label">Floating Points</span>
+                <h3 id="agents-balance-stat" class="stat-value">₹0</h3>
+                <span class="stat-sub">Agent Wallets</span>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background: rgba(139, 92, 246, 0.15); color: #a78bfa;">📊</div>
+              <div class="stat-info">
+                <span class="stat-label">Total Credit Limit</span>
+                <h3 id="agents-credit-stat" class="stat-value">₹0</h3>
+                <span class="stat-sub">House Exposure Limit</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-panel">
+            <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+              <div>
+                <h3><span>🤝</span> Multi-Tier Khaiwal & Agent Network</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Manage retail bookies, credit limits, cash recharges, and commission settlements.</p>
+              </div>
+              <div style="display: flex; gap: 0.5rem;">
+                <button id="btn-refresh-agents" class="btn btn-outline">🔄 Refresh</button>
+                <button id="btn-add-agent" class="btn btn-primary">➕ Onboard New Khaiwal</button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Khaiwal / ID</th>
+                    <th>Role</th>
+                    <th>Mobile</th>
+                    <th>Credit Limit</th>
+                    <th>Floating Points</th>
+                    <th>Downstream</th>
+                    <th>Commission %</th>
+                    <th>Status</th>
+                    <th style="text-align: right;">Operations</th>
+                  </tr>
+                </thead>
+                <tbody id="agents-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             TAB 6: USERS MANAGEMENT
+             ================================================================ -->
+        <section id="tab-users" style="display: none;">
+          <div class="card-panel">
+            <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+              <div>
+                <h3><span>👥</span> Player Directory & Wallets</h3>
+              </div>
+              <div style="display: flex; gap: 0.5rem; align-items: center;">
+                <button class="btn btn-sm btn-outline-gold" id="btn-allocate-quota" onclick="window.App.openAllocateQuotaModal()">👑 Allocate Sub-Admin Quotas</button>
+                <div class="search-input-box">
+                  <span class="search-icon">🔍</span>
+                  <input type="text" id="user-search-input" class="form-control" placeholder="Search by Name or Mobile...">
+                </div>
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>User ID</th>
+                    <th>Full Name & Mobile</th>
+                    <th>Wallet Balance</th>
+                    <th>Total Bets</th>
+                    <th>Total Won</th>
+                    <th>Status</th>
+                    <th>Registered</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="users-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             TAB 7: WALLET & FUND MANAGEMENT
+             ================================================================ -->
+        <section id="tab-wallet" style="display: none;">
+          <!-- Dual Queue Switcher -->
+          <div class="flex-between" style="margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
+            <div class="segmented-control">
+              <button id="btn-tab-deposits" class="segmented-btn active" onclick="window.App.setWalletTab('deposits')">
+                📥 Deposit Requests (Add Funds)
+              </button>
+              <button id="btn-tab-withdrawals" class="segmented-btn" onclick="window.App.setWalletTab('withdrawals')">
+                📤 Withdrawal Requests (Payouts)
+              </button>
+            </div>
+          </div>
+
+          <!-- Deposits Queue -->
+          <div id="deposits-queue-wrap" class="card-panel">
+            <div class="panel-header">
+              <h3><span>📥</span> Pending & Recent Deposit Requests</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Req ID</th>
+                    <th>Player</th>
+                    <th>Amount</th>
+                    <th>Method</th>
+                    <th>UTR / Ref Number</th>
+                    <th>Status</th>
+                    <th>Requested Time</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="deposits-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Withdrawals Queue -->
+          <div id="withdrawals-queue-wrap" class="card-panel" style="display: none;">
+            <div class="panel-header">
+              <h3><span>📤</span> Player Withdrawal Requests</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Req ID</th>
+                    <th>Player</th>
+                    <th>Amount</th>
+                    <th>Method</th>
+                    <th>Payout Destination</th>
+                    <th>Status</th>
+                    <th>Requested Time</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="withdrawals-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Admin Payment Channels Configuration -->
+          <div class="card-panel">
+            <div class="panel-header">
+              <h3><span>⚙️</span> Admin Payment Receiver Settings (UPI & Banking)</h3>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label">Admin UPI ID (for user QR / Intent)</label>
+                <input type="text" id="wallet-admin-upi" class="form-control text-mono" value="kalyanboss@upi">
+              </div>
+              <div class="form-group">
+                <label class="form-label">PhonePe Merchant / Number</label>
+                <input type="text" id="wallet-phonepe" class="form-control text-mono" value="9876543210">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Google Pay Number</label>
+                <input type="text" id="wallet-gpay" class="form-control text-mono" value="9876543210">
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             TAB 8: GAME RATES (BHAV)
+             ================================================================ -->
+        <section id="tab-rates" style="display: none;">
+          <div class="card-panel">
+            <div class="panel-header">
+              <h3><span>⚖️</span> Payout Multipliers (Game Rates / Bhav)</h3>
+              <p style="color: var(--text-muted); font-size: 0.85rem;">
+                Adjust winning odds and minimum/maximum bidding limits across all betting modules.
+              </p>
+            </div>
+            <div id="rates-cards-grid" class="rates-grid"></div>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             TAB 9: NOTICE & SYSTEM SETTINGS
+             ================================================================ -->
+        <section id="tab-settings" style="display: none;">
+          <div class="card-panel">
+            <div class="panel-header">
+              <h3><span>📢</span> App Notice Board & Customer Contacts</h3>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Scrolling Marquee Message (User App Notice)</label>
+              <textarea id="setting-marquee" class="form-control" rows="3"></textarea>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+              <div class="form-group">
+                <label class="form-label">WhatsApp Helpline Number</label>
+                <input type="text" id="setting-whatsapp" class="form-control" value="+91 98765 43210">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Telegram Channel Link</label>
+                <input type="text" id="setting-telegram" class="form-control" value="https://t.me/kalyan_official">
+              </div>
+            </div>
+          </div>
+
+          <!-- Admin Payment Details & Gateway Configuration (Visible to All Users) -->
+          <div class="card-panel">
+            <div class="panel-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.75rem;">
+              <div>
+                <h3><span>💳</span> Admin Banking & Payment Gateway Details (Live to Players)</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">These payment methods, UPI IDs, bank accounts, and QR codes are dynamically displayed in the Player Deposit screen.</p>
+              </div>
+              <button type="button" class="btn btn-sm btn-outline-cyan" onclick="window.App.testPaymentQRPreview()">🔍 Test QR Preview</button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+              <div class="form-group">
+                <label class="form-label">Official Admin UPI ID (VPA)</label>
+                <input type="text" id="setting-upi-id" class="form-control text-mono font-bold" placeholder="e.g. kalyanboss@upi" style="color: var(--brand-gold);">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Payee / Merchant Display Name</label>
+                <input type="text" id="setting-upi-name" class="form-control" placeholder="e.g. Kalyan 777 Official Services">
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem;">
+              <div class="form-group">
+                <label class="form-label">PhonePe Receiving Number</label>
+                <input type="tel" id="setting-phonepe" class="form-control text-mono" placeholder="10 Digits">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Google Pay Receiving Number</label>
+                <input type="tel" id="setting-gpay" class="form-control text-mono" placeholder="10 Digits">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Paytm Receiving Number</label>
+                <input type="tel" id="setting-paytm" class="form-control text-mono" placeholder="10 Digits">
+              </div>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.02); border: 1px dashed var(--border-subtle); border-radius: 10px; padding: 1rem; margin-bottom: 1rem;">
+              <h4 style="font-size: 0.9rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 0.75rem;">🏦 Direct IMPS / NEFT Bank Account Details</h4>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
+                <div class="form-group" style="margin-bottom: 0.5rem;">
+                  <label class="form-label">Bank Name</label>
+                  <input type="text" id="setting-bank-name" class="form-control" placeholder="e.g. HDFC Bank">
+                </div>
+                <div class="form-group" style="margin-bottom: 0.5rem;">
+                  <label class="form-label">Account Number</label>
+                  <input type="text" id="setting-bank-acc" class="form-control text-mono" placeholder="e.g. 50100492819234">
+                </div>
+                <div class="form-group" style="margin-bottom: 0.5rem;">
+                  <label class="form-label">IFSC Code</label>
+                  <input type="text" id="setting-bank-ifsc" class="form-control text-mono font-bold" placeholder="e.g. HDFC0001245" style="text-transform: uppercase;">
+                </div>
+                <div class="form-group" style="margin-bottom: 0.5rem;">
+                  <label class="form-label">Account Holder Name</label>
+                  <input type="text" id="setting-bank-holder" class="form-control" placeholder="e.g. Kalyan Entertainment PVT LTD">
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-bottom: 1rem;">
+              <label class="form-label">Player Deposit Instructions & Payment Notice</label>
+              <textarea id="setting-payment-notes" class="form-control" rows="2" placeholder="e.g. Pay on any UPI app and enter the 12-digit UTR number below for instant points credit."></textarea>
+            </div>
+          </div>
+
+          <div class="card-panel">
+            <div class="panel-header">
+              <h3><span>🛡️</span> Financial & Platform Safeguards</h3>
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem;">
+              <div class="form-group">
+                <label class="form-label">Minimum Deposit (₹)</label>
+                <input type="number" id="setting-min-dep" class="form-control" value="100">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Minimum Withdrawal (₹)</label>
+                <input type="number" id="setting-min-wit" class="form-control" value="500">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Global Betting Status</label>
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem;">
+                  <label class="switch">
+                    <input type="checkbox" id="setting-betting-active" checked>
+                    <span class="slider"></span>
+                  </label>
+                  <span style="font-size: 0.85rem; color: var(--text-secondary);">Betting Enabled</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Maintenance Mode</label>
+                <div style="display: flex; align-items: center; gap: 0.75rem; margin-top: 0.5rem;">
+                  <label class="switch">
+                    <input type="checkbox" id="setting-maintenance">
+                    <span class="slider"></span>
+                  </label>
+                  <span style="font-size: 0.85rem; color: var(--accent-rose);">Emergency Maintenance</span>
+                </div>
+              </div>
+            </div>
+            <button id="btn-save-settings" class="btn btn-primary">Save All Settings</button>
+          </div>
+        </section>
+
+        <!-- ================================================================
+             TAB 10: AUDIT LOGS
+             ================================================================ -->
+        <section id="tab-logs" style="display: none;">
+          <div class="card-panel">
+            <div class="panel-header">
+              <h3><span>🛡️</span> Result Declaration Audit Trail</h3>
+            </div>
+            <div class="table-responsive">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Log ID</th>
+                    <th>Market</th>
+                    <th>Session</th>
+                    <th>Patti - Ank</th>
+                    <th>Winners</th>
+                    <th>Total Payout</th>
+                    <th>Operator</th>
+                    <th>Declared Time</th>
+                  </tr>
+                </thead>
+                <tbody id="logs-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- Mobile Bottom Navigation Bar (5 Primary Actions) -->
+  <nav class="mobile-bottom-nav">
+    <button class="bottom-nav-item active" data-tab="dashboard">
+      <span class="nav-icon">📊</span>
+      <span>Dashboard</span>
+    </button>
+    <button class="bottom-nav-item" data-tab="markets">
+      <span class="nav-icon">🎲</span>
+      <span>Bazaars</span>
+    </button>
+    <button class="bottom-nav-item" data-tab="declare">
+      <span class="nav-icon">⚡</span>
+      <span>Declare</span>
+    </button>
+    <button class="bottom-nav-item" data-tab="cutting">
+      <span class="nav-icon">📈</span>
+      <span>Cutting</span>
+    </button>
+    <button class="bottom-nav-item" data-tab="wallet">
+      <span class="nav-icon">💳</span>
+      <span>Wallet</span>
+    </button>
+  </nav>
+
+  <!-- Global Modal Dialog -->
+  <div id="modal-overlay" class="modal-overlay">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modal-title">Dialog Title</h3>
+        <button id="modal-close-btn" class="modal-close-btn">✕</button>
+      </div>
+      <div id="modal-body" class="modal-body">
+        Modal Content
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/patti-engine.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

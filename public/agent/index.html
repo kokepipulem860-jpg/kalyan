@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Kalyan 777 - खाईवाल एवं एजेंट पोर्टल</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #070a13;
+      --bg-card: #0f1626;
+      --bg-card-subtle: #141d33;
+      --bg-input: #0a0f1d;
+      --border-color: #1f2b45;
+      --border-accent: #2e3e63;
+      --brand-gold: #f59e0b;
+      --brand-gold-glow: rgba(245, 158, 11, 0.25);
+      --accent-emerald: #10b981;
+      --accent-rose: #f43f5e;
+      --accent-cyan: #06b6d4;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display: 'Outfit', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    /* Container */
+    .app-container {
+      max-width: 600px;
+      width: 100%;
+      margin: 0 auto;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: #090e1a;
+      border-left: 1px solid var(--border-color);
+      border-right: 1px solid var(--border-color);
+      position: relative;
+    }
+
+    /* Top App Header */
+    .agent-header {
+      background: rgba(15, 22, 38, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.85rem 1.25rem;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-box {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #070a13;
+      font-family: var(--font-display);
+      font-weight: 900;
+      font-size: 0.95rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+
+    .brand-sub {
+      font-size: 0.72rem;
+      color: var(--brand-gold);
+      font-weight: 600;
+    }
+
+    .header-user-btn {
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-accent);
+      color: var(--text-main);
+      padding: 0.35rem 0.75rem;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* Content Area */
+    .agent-content {
+      flex: 1;
+      padding: 1rem 1.15rem 5rem;
+    }
+
+    /* Floating Wallet Banner */
+    .floating-wallet-card {
+      background: linear-gradient(135deg, #141e34 0%, #0c1424 100%);
+      border: 1px solid var(--border-accent);
+      border-radius: 16px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+
+    .floating-wallet-card::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      right: -50px;
+      width: 140px;
+      height: 140px;
+      background: var(--brand-gold-glow);
+      filter: blur(40px);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .wallet-header-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+
+    .wallet-label {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .wallet-role-pill {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--brand-gold);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      padding: 0.15rem 0.5rem;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .wallet-amount-huge {
+      font-family: var(--font-mono);
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: var(--brand-gold);
+      line-height: 1.1;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: baseline;
+      gap: 0.25rem;
+    }
+
+    .wallet-currency {
+      font-size: 1.4rem;
+      color: var(--text-muted);
+    }
+
+    .wallet-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .stat-mini-box {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-mini-label {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+    }
+
+    .stat-mini-val {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    /* Action Buttons Row */
+    .quick-actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .action-btn-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.4rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .action-btn-card:hover, .action-btn-card:active {
+      transform: translateY(-2px);
+      border-color: var(--brand-gold);
+      background: var(--bg-card-subtle);
+    }
+
+    .action-btn-card.primary-action {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.05));
+      border-color: rgba(16, 185, 129, 0.35);
+    }
+
+    .action-btn-card.primary-action:hover {
+      border-color: var(--accent-emerald);
+    }
+
+    .action-btn-card.secondary-action {
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.15), rgba(244, 63, 94, 0.05));
+      border-color: rgba(244, 63, 94, 0.35);
+    }
+
+    .action-btn-card.secondary-action:hover {
+      border-color: var(--accent-rose);
+    }
+
+    .action-icon {
+      font-size: 1.6rem;
+    }
+
+    .action-title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .action-sub {
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    /* Daily Khata Hero Banner */
+    .khata-banner {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(6, 182, 212, 0.08));
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 12px;
+      padding: 1rem 1.15rem;
+      margin-bottom: 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .khata-info h4 {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--brand-gold);
+      margin-bottom: 0.2rem;
+    }
+
+    .khata-info p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    .btn-khata-wa {
+      background: #25D366;
+      color: #070a13;
+      border: none;
+      padding: 0.55rem 0.95rem;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+    }
+
+    .btn-khata-wa:hover {
+      opacity: 0.9;
+    }
+
+    /* Section Tabs */
+    .nav-tabs-pill {
+      display: flex;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 0.25rem;
+      margin-bottom: 1rem;
+      gap: 0.25rem;
+    }
+
+    .tab-pill {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .tab-pill.active {
+      background: var(--brand-gold);
+      color: #070a13;
+      font-weight: 800;
+    }
+
+    /* Player Cards & Lists */
+    .player-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 0.85rem 1rem;
+      margin-bottom: 0.6rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: border-color 0.2s;
+    }
+
+    .player-card:hover {
+      border-color: var(--border-accent);
+    }
+
+    .player-meta h5 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .player-phone {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+    }
+
+    .player-wallet-box {
+      text-align: right;
+    }
+
+    .player-bal {
+      font-family: var(--font-mono);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--brand-gold);
+    }
+
+    .player-quick-acts {
+      display: flex;
+      gap: 0.35rem;
+      margin-top: 0.35rem;
+    }
+
+    .btn-mini {
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-accent);
+      color: var(--text-main);
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.25rem 0.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .btn-mini-green {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: rgba(16, 185, 129, 0.4);
+      color: var(--accent-emerald);
+    }
+
+    .btn-mini-rose {
+      background: rgba(244, 63, 94, 0.15);
+      border-color: rgba(244, 63, 94, 0.4);
+      color: var(--accent-rose);
+    }
+
+    /* Passbook Ledger Rows */
+    .ledger-row {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 10px;
+      padding: 0.75rem 0.95rem;
+      margin-bottom: 0.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .ledger-desc {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .ledger-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .ledger-time {
+      font-size: 0.7rem;
+      color: var(--text-dim);
+    }
+
+    .ledger-amt {
+      font-family: var(--font-mono);
+      font-size: 0.95rem;
+      font-weight: 800;
+      text-align: right;
+    }
+
+    .amt-plus { color: var(--accent-emerald); }
+    .amt-minus { color: var(--accent-rose); }
+
+    /* Modals & Slide-ups */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      z-index: 100;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-sheet {
+      background: #0f1628;
+      border: 1px solid var(--border-accent);
+      border-radius: 20px 20px 0 0;
+      width: 100%;
+      max-width: 600px;
+      padding: 1.25rem 1.25rem 2rem;
+      max-height: 85vh;
+      overflow-y: auto;
+      animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .sheet-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.15rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .sheet-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-main);
+    }
+
+    .sheet-close {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.3rem;
+      cursor: pointer;
+    }
+
+    .form-group {
+      margin-bottom: 1rem;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .form-control {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 0.75rem 0.95rem;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .form-control:focus {
+      border-color: var(--brand-gold);
+    }
+
+    /* Preset Chips */
+    .chip-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .chip-btn {
+      background: var(--bg-card-subtle);
+      border: 1px solid var(--border-accent);
+      color: var(--brand-gold);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 0.4rem;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .chip-btn:active {
+      background: var(--brand-gold);
+      color: #070a13;
+    }
+
+    .btn-submit {
+      width: 100%;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #070a13;
+      border: none;
+      padding: 0.85rem;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+    }
+
+    .btn-submit-rose {
+      background: linear-gradient(135deg, #f43f5e, #e11d48);
+      color: white;
+      box-shadow: 0 4px 15px rgba(244, 63, 94, 0.3);
+    }
+
+    /* Login Screen View */
+    .login-container {
+      padding: 2.5rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 80vh;
+    }
+
+    .login-hero {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .login-hero-logo {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .login-hero h2 {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: var(--brand-gold);
+      margin-bottom: 0.25rem;
+    }
+
+    .login-hero p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    /* Toast Notification */
+    .toast-box {
+      position: fixed;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #141d33;
+      border: 1px solid var(--border-accent);
+      color: var(--text-main);
+      padding: 0.65rem 1.25rem;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      gap: 0.5rem;
+      max-width: 90%;
+      text-align: center;
+    }
+
+    .toast-box.active {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+
+    <!-- Top Sticky Header -->
+    <header class="agent-header" id="app-header" style="display: none;">
+      <div class="brand-box">
+        <span class="brand-badge">777</span>
+        <div>
+          <div class="brand-title" id="hdr-agent-name">Khaiwal Portal</div>
+          <div class="brand-sub" id="hdr-agent-id">AGT101 ● ONLINE</div>
+        </div>
+      </div>
+      <button class="header-user-btn" onclick="logoutAgent()">
+        <span>🚪 बाहर</span>
+      </button>
+    </header>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="toast" class="toast-box">
+      <span id="toast-icon">ℹ️</span>
+      <span id="toast-text">Message</span>
+    </div>
+
+    <!-- VIEW 1: LOGIN VIEW -->
+    <section id="view-login" class="login-container">
+      <div class="login-hero">
+        <div class="login-hero-logo">🤝</div>
+        <h2>KALYAN 777 KHAIWAL</h2>
+        <p>खाईवाल एवं मास्टर एजेंट ऑपरेटर पोर्टल</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">रजिस्टर्ड मोबाइल नंबर</label>
+        <input type="tel" id="login-phone" class="form-control" placeholder="10 अंकों का मोबाइल नंबर" maxlength="10">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">सिक्योरिटी MPIN</label>
+        <input type="password" id="login-mpin" class="form-control" placeholder="4 अंकों का MPIN" maxlength="6">
+      </div>
+
+      <button class="btn-submit" onclick="submitAgentLogin()">
+        🔐 लॉगिन करें (Login)
+      </button>
+
+      <div style="margin-top: 1.5rem; padding: 1rem; background: var(--bg-card); border: 1px dashed var(--border-accent); border-radius: 12px; text-align: center;">
+        <span style="font-size: 0.78rem; color: var(--text-dim); display: block; margin-bottom: 0.5rem;">क्विक डेमो लॉगिन (Quick Fill):</span>
+        <button class="btn-mini btn-mini-green" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;" onclick="
+          document.getElementById('login-phone').value = '9876543210';
+          document.getElementById('login-mpin').value = '5566';
+          submitAgentLogin();
+        ">
+          ⚡ किशोर भाई खाईवाल (9876543210 / 5566)
+        </button>
+      </div>
+    </section>
+
+    <!-- VIEW 2: AUTHENTICATED KHAIWAL DASHBOARD -->
+    <main id="view-dashboard" class="agent-content" style="display: none;">
+
+      <!-- Floating Balance Card -->
+      <div class="floating-wallet-card">
+        <div class="wallet-header-flex">
+          <span class="wallet-label">
+            <span>💼</span> फ्लोटिंग पॉइंट्स (Floating Cash)
+          </span>
+          <span class="wallet-role-pill" id="agent-role-pill">KHAIWAL</span>
+        </div>
+
+        <div class="wallet-amount-huge">
+          <span class="wallet-currency">₹</span>
+          <span id="agent-floating-balance">0</span>
+        </div>
+
+        <div class="wallet-stats-grid">
+          <div class="stat-mini-box">
+            <span class="stat-mini-label">क्रेडिट लिमिट (Limit):</span>
+            <span class="stat-mini-val" id="agent-credit-limit">₹0</span>
+          </div>
+          <div class="stat-mini-box">
+            <span class="stat-mini-label">कमीशन प्रतिशत (Rate):</span>
+            <span class="stat-mini-val" style="color: var(--accent-emerald);" id="agent-comm-rate">0%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Action Cards: Recharge & Cash-Out -->
+      <div class="quick-actions-grid">
+        <div class="action-btn-card primary-action" onclick="openTransferModal()">
+          <span class="action-icon">⚡</span>
+          <span class="action-title">पॉइंट्स जमा करें</span>
+          <span class="action-sub">Transfer to Player</span>
+        </div>
+
+        <div class="action-btn-card secondary-action" onclick="openWithdrawModal()">
+          <span class="action-icon">💸</span>
+          <span class="action-title">पॉइंट्स निकासी</span>
+          <span class="action-sub">Cash-Out from Player</span>
+        </div>
+      </div>
+
+      <!-- Daily WhatsApp Khata Hero Strip -->
+      <div class="khata-banner">
+        <div class="khata-info">
+          <h4>📋 आज का दैनिक खाता पर्ची</h4>
+          <p id="khata-preview-summary">टर्नओवर एवं कमीशन का रियल-टाइम हिसाब</p>
+        </div>
+        <button class="btn-khata-wa" onclick="openKhataModal()">
+          <span>💬 पर्ची देखें</span>
+        </button>
+      </div>
+
+      <!-- Tabs: My Players vs Passbook -->
+      <div class="nav-tabs-pill">
+        <button class="tab-pill active" id="tab-btn-players" onclick="switchAgentTab('players')">
+          👥 मेरे खिलाड़ी (<span id="players-count-badge">0</span>)
+        </button>
+        <button class="tab-pill" id="tab-btn-ledger" onclick="switchAgentTab('ledger')">
+          📜 लेन-देन पासबुक
+        </button>
+      </div>
+
+      <!-- Tab Content 1: Players List -->
+      <div id="tab-content-players">
+        <div id="players-list-wrap">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+      <!-- Tab Content 2: Passbook Ledger -->
+      <div id="tab-content-ledger" style="display: none;">
+        <div id="ledger-list-wrap">
+          <!-- Rendered dynamically -->
+        </div>
+      </div>
+
+    </main>
+
+    <!-- MODAL 1: RECHARGE (TRANSFER POINTS TO PLAYER) -->
+    <div id="modal-transfer" class="modal-overlay">
+      <div class="modal-sheet">
+        <div class="sheet-header">
+          <h3 class="sheet-title">⚡ खिलाड़ी को पॉइंट्स जमा करें</h3>
+          <button class="sheet-close" onclick="closeAllModals()">✕</button>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">खिलाड़ी चुनें (Select Player)</label>
+          <select id="transfer-player-select" class="form-control" onchange="updatePlayerBalPreview(this.value)">
+            <!-- Dynamic options -->
+          </select>
+        </div>
+
+        <div id="player-preview-card" style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.75rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 0.8rem; color: var(--text-muted);">वर्तमान बैलेंस:</span>
+          <b class="text-mono" id="preview-curr-bal" style="color: var(--brand-gold); font-size: 1.05rem;">₹0</b>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">जमा पॉइंट्स (Points Amount ₹)</label>
+          <input type="number" id="transfer-amount" class="form-control" placeholder="e.g. 1000" min="10" step="100">
+          <div class="chip-grid">
+            <button class="chip-btn" onclick="addTransferPreset(500)">+500</button>
+            <button class="chip-btn" onclick="addTransferPreset(1000)">+1,000</button>
+            <button class="chip-btn" onclick="addTransferPreset(2000)">+2,000</button>
+            <button class="chip-btn" onclick="addTransferPreset(5000)">+5,000</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">रिमार्क (वैकल्पिक)</label>
+          <input type="text" id="transfer-remark" class="form-control" placeholder="e.g. काउंटर नकद प्राप्त">
+        </div>
+
+        <button class="btn-submit" onclick="submitPointsTransfer()">
+          पुष्टि करें एवं जमा भेजें (Confirm Transfer)
+        </button>
+      </div>
+    </div>
+
+    <!-- MODAL 2: CASH-OUT (WITHDRAW FROM PLAYER) -->
+    <div id="modal-withdraw" class="modal-overlay">
+      <div class="modal-sheet">
+        <div class="sheet-header">
+          <h3 class="sheet-title">💸 खिलाड़ी से निकासी (Cash-Out)</h3>
+          <button class="sheet-close" onclick="closeAllModals()">✕</button>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">खिलाड़ी चुनें</label>
+          <select id="withdraw-player-select" class="form-control" onchange="updateWithdrawPreview(this.value)">
+            <!-- Dynamic options -->
+          </select>
+        </div>
+
+        <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; padding: 0.75rem; margin-bottom: 1rem; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 0.8rem; color: var(--text-muted);">खिलाड़ी का बैलेंस:</span>
+          <b class="text-mono" id="preview-wit-bal" style="color: var(--brand-gold); font-size: 1.05rem;">₹0</b>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">निकासी पॉइंट्स (Points Amount ₹)</label>
+          <input type="number" id="withdraw-amount" class="form-control" placeholder="e.g. 500" min="10" step="100">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">रिमार्क</label>
+          <input type="text" id="withdraw-remark" class="form-control" placeholder="e.g. काउंटर नकद भुगतान">
+        </div>
+
+        <button class="btn-submit btn-submit-rose" onclick="submitPointsWithdrawal()">
+          निकासी स्वीकार करें (Confirm Cash-Out)
+        </button>
+      </div>
+    </div>
+
+    <!-- MODAL 3: DAILY WHATSAPP KHATA SLIP -->
+    <div id="modal-khata" class="modal-overlay">
+      <div class="modal-sheet">
+        <div class="sheet-header">
+          <h3 class="sheet-title">📋 आज का खाता पर्ची (WhatsApp Slip)</h3>
+          <button class="sheet-close" onclick="closeAllModals()">✕</button>
+        </div>
+
+        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--accent-emerald); border-radius: 12px; padding: 1rem; margin-bottom: 1rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span style="font-size: 0.78rem; color: var(--text-muted);">कुल टर्नओवर (Turnover):</span>
+            <b class="text-mono" id="khata-turnover" style="font-size: 1.1rem; color: var(--text-main);">₹0</b>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+            <span style="font-size: 0.78rem; color: var(--text-muted);">कमीशन अर्जित (Commission):</span>
+            <b class="text-mono" id="khata-comm-earned" style="font-size: 1.1rem; color: var(--accent-emerald);">₹0</b>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 0.5rem; border-top: 1px dashed rgba(255,255,255,0.1);">
+            <span style="font-size: 0.85rem; font-weight: 800; color: var(--brand-gold);">खाईवाल शुद्ध मार्जिन:</span>
+            <b class="text-mono" id="khata-net-margin" style="font-size: 1.3rem; font-weight: 900; color: var(--brand-gold);">₹0</b>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">WhatsApp Slip Text</label>
+          <textarea id="khata-slip-textarea" class="form-control" rows="8" readonly style="font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.4; background: #070a14;"></textarea>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; margin-top: 0.5rem;">
+          <button class="btn-submit" style="flex: 1;" onclick="copyKhataToClipboard()">
+            📋 कॉपी करें (Copy)
+          </button>
+          <a id="btn-share-whatsapp" href="#" target="_blank" class="btn-khata-wa" style="text-decoration: none; justify-content: center; flex: 1.2; font-size: 0.95rem; border-radius: 12px;">
+            💬 व्हाट्सएप भेजें
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    (function() {
+      'use strict';
+
+      const API_BASE = '/api/agents';
+      let currentAgent = null;
+      let agentToken = localStorage.getItem('kalyan_agent_token') || '';
+      let downstreamPlayers = [];
+      let transactions = [];
+      let currentSheet = null;
+
+      function showToast(msg, icon = 'ℹ️') {
+        const toast = document.getElementById('toast');
+        document.getElementById('toast-icon').textContent = icon;
+        document.getElementById('toast-text').textContent = msg;
+        toast.classList.add('active');
+        setTimeout(() => toast.classList.remove('active'), 3200);
+      }
+
+      function getAuthHeaders() {
+        return {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${agentToken}`
+        };
+      }
+
+      async function checkAuth() {
+        if (!agentToken) {
+          showLoginView();
+          return;
+        }
+
+        try {
+          const res = await fetch(`${API_BASE}/me`, { headers: getAuthHeaders() });
+          const data = await res.json();
+          if (data.success && data.agent) {
+            currentAgent = data.agent;
+            showDashboardView();
+            loadAllData();
+          } else {
+            localStorage.removeItem('kalyan_agent_token');
+            agentToken = '';
+            showLoginView();
+          }
+        } catch (e) {
+          console.warn('Auth check error:', e);
+          showLoginView();
+        }
+      }
+
+      function showLoginView() {
+        document.getElementById('app-header').style.display = 'none';
+        document.getElementById('view-login').style.display = 'flex';
+        document.getElementById('view-dashboard').style.display = 'none';
+      }
+
+      function showDashboardView() {
+        document.getElementById('app-header').style.display = 'flex';
+        document.getElementById('view-login').style.display = 'none';
+        document.getElementById('view-dashboard').style.display = 'block';
+
+        document.getElementById('hdr-agent-name').textContent = currentAgent.name;
+        document.getElementById('hdr-agent-id').textContent = `${currentAgent.id} ● ${currentAgent.phone}`;
+        document.getElementById('agent-role-pill').textContent = currentAgent.role;
+        document.getElementById('agent-floating-balance').textContent = Number(currentAgent.floating_balance || 0).toLocaleString('en-IN');
+        document.getElementById('agent-credit-limit').textContent = '₹' + Number(currentAgent.credit_limit || 0).toLocaleString('en-IN');
+        document.getElementById('agent-comm-rate').textContent = `${currentAgent.commission_rate}%`;
+      }
+
+      window.submitAgentLogin = async function() {
+        const phone = document.getElementById('login-phone').value.trim();
+        const mpin = document.getElementById('login-mpin').value.trim();
+
+        if (!phone || !mpin) {
+          showToast('कृपया मोबाइल नंबर और MPIN दर्ज करें', '⚠️');
+          return;
+        }
+
+        try {
+          const res = await fetch(`${API_BASE}/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ phone, mpin })
+          });
+          const data = await res.json();
+
+          if (data.success && data.token) {
+            agentToken = data.token;
+            localStorage.setItem('kalyan_agent_token', agentToken);
+            currentAgent = data.agent;
+            showToast(`नमस्ते ${currentAgent.name}! स्वागत है।`, '✅');
+            showDashboardView();
+            loadAllData();
+          } else {
+            showToast(data.error || 'लॉगिन असफल', '❌');
+          }
+        } catch (e) {
+          showToast('सर्वर से संपर्क नहीं हो पाया', '❌');
+        }
+      };
+
+      window.logoutAgent = function() {
+        localStorage.removeItem('kalyan_agent_token');
+        agentToken = '';
+        currentAgent = null;
+        showLoginView();
+        showToast('लॉगआउट संपन्न', 'ℹ️');
+      };
+
+      async function loadAllData() {
+        await Promise.all([
+          loadPlayers(),
+          loadCommissionSheet(),
+          loadTransactions()
+        ]);
+      }
+
+      async function loadPlayers() {
+        try {
+          const res = await fetch(`${API_BASE}/players`, { headers: getAuthHeaders() });
+          const data = await res.json();
+          if (data.success) {
+            downstreamPlayers = data.players || [];
+            renderPlayers();
+          }
+        } catch (e) {
+          console.warn('Players load error:', e);
+        }
+      }
+
+      function renderPlayers() {
+        document.getElementById('players-count-badge').textContent = downstreamPlayers.length;
+        const container = document.getElementById('players-list-wrap');
+        const transferSelect = document.getElementById('transfer-player-select');
+        const withdrawSelect = document.getElementById('withdraw-player-select');
+
+        if (!container) return;
+
+        if (downstreamPlayers.length === 0) {
+          container.innerHTML = `<div style="text-align: center; padding: 2rem; color: var(--text-dim);">कोई डाउनस्ट्रीम खिलाड़ी लिंक नहीं है।</div>`;
+          return;
+        }
+
+        container.innerHTML = downstreamPlayers.map(p => `
+          <div class="player-card">
+            <div class="player-meta">
+              <h5><span>👤</span> ${p.name}</h5>
+              <div class="player-phone">${p.id} ● ${p.phone}</div>
+            </div>
+            <div class="player-wallet-box">
+              <div class="player-bal">₹${Number(p.wallet_balance || 0).toLocaleString('en-IN')}</div>
+              <div class="player-quick-acts">
+                <button class="btn-mini btn-mini-green" onclick="openTransferForPlayer('${p.id}')">जमा +</button>
+                <button class="btn-mini btn-mini-rose" onclick="openWithdrawForPlayer('${p.id}')">निकासी -</button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+
+        const selectOptions = downstreamPlayers.map(p => `
+          <option value="${p.id}">${p.name} (${p.phone}) - Bal: ₹${p.wallet_balance || 0}</option>
+        `).join('');
+
+        if (transferSelect) transferSelect.innerHTML = selectOptions;
+        if (withdrawSelect) withdrawSelect.innerHTML = selectOptions;
+
+        if (downstreamPlayers.length > 0) {
+          updatePlayerBalPreview(downstreamPlayers[0].id);
+          updateWithdrawPreview(downstreamPlayers[0].id);
+        }
+      }
+
+      async function loadCommissionSheet() {
+        try {
+          const res = await fetch(`${API_BASE}/commission-sheet`, { headers: getAuthHeaders() });
+          const data = await res.json();
+          if (data.success && data.sheet) {
+            currentSheet = data.sheet;
+            document.getElementById('khata-preview-summary').textContent = 
+              `टर्नओवर: ₹${data.sheet.totalTurnover.toLocaleString('en-IN')} | कमीशन: ₹${data.sheet.commissionEarned.toLocaleString('en-IN')}`;
+          }
+        } catch (e) {
+          console.warn('Sheet error:', e);
+        }
+      }
+
+      async function loadTransactions() {
+        try {
+          const res = await fetch(`${API_BASE}/transactions`, { headers: getAuthHeaders() });
+          const data = await res.json();
+          if (data.success) {
+            transactions = data.transactions || [];
+            renderTransactions();
+          }
+        } catch (e) {
+          console.warn('Tx error:', e);
+        }
+      }
+
+      function renderTransactions() {
+        const container = document.getElementById('ledger-list-wrap');
+        if (!container) return;
+
+        if (transactions.length === 0) {
+          container.innerHTML = `<div style="text-align: center; padding: 2rem; color: var(--text-dim);">कोई लेन-देन रिकॉर्ड नहीं मिला।</div>`;
+          return;
+        }
+
+        container.innerHTML = transactions.map(t => {
+          const isCredit = t.type === 'ADMIN_CREDIT' || t.type === 'WITHDRAW_FROM_PLAYER';
+          return `
+            <div class="ledger-row">
+              <div class="ledger-desc">
+                <div class="ledger-title">${t.remark || t.type}</div>
+                <div class="ledger-time">${t.created_at || ''}</div>
+              </div>
+              <div class="ledger-amt ${isCredit ? 'amt-plus' : 'amt-minus'}">
+                ${isCredit ? '+' : '-'}₹${Number(t.amount).toLocaleString('en-IN')}
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      window.switchAgentTab = function(tab) {
+        document.getElementById('tab-btn-players').classList.toggle('active', tab === 'players');
+        document.getElementById('tab-btn-ledger').classList.toggle('active', tab === 'ledger');
+        document.getElementById('tab-content-players').style.display = (tab === 'players') ? 'block' : 'none';
+        document.getElementById('tab-content-ledger').style.display = (tab === 'ledger') ? 'block' : 'none';
+      };
+
+      window.openTransferModal = function() {
+        document.getElementById('modal-transfer').classList.add('active');
+      };
+
+      window.openWithdrawModal = function() {
+        document.getElementById('modal-withdraw').classList.add('active');
+      };
+
+      window.openTransferForPlayer = function(playerId) {
+        const sel = document.getElementById('transfer-player-select');
+        if (sel) sel.value = playerId;
+        updatePlayerBalPreview(playerId);
+        openTransferModal();
+      };
+
+      window.openWithdrawForPlayer = function(playerId) {
+        const sel = document.getElementById('withdraw-player-select');
+        if (sel) sel.value = playerId;
+        updateWithdrawPreview(playerId);
+        openWithdrawModal();
+      };
+
+      window.updatePlayerBalPreview = function(playerId) {
+        const p = downstreamPlayers.find(x => x.id === playerId);
+        const el = document.getElementById('preview-curr-bal');
+        if (el) el.textContent = p ? `₹${Number(p.wallet_balance || 0).toLocaleString('en-IN')}` : '₹0';
+      };
+
+      window.updateWithdrawPreview = function(playerId) {
+        const p = downstreamPlayers.find(x => x.id === playerId);
+        const el = document.getElementById('preview-wit-bal');
+        if (el) el.textContent = p ? `₹${Number(p.wallet_balance || 0).toLocaleString('en-IN')}` : '₹0';
+      };
+
+      window.addTransferPreset = function(amt) {
+        const input = document.getElementById('transfer-amount');
+        const curr = parseInt(input.value, 10) || 0;
+        input.value = curr + amt;
+      };
+
+      window.closeAllModals = function() {
+        document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+      };
+
+      window.submitPointsTransfer = async function() {
+        const playerId = document.getElementById('transfer-player-select').value;
+        const points = parseInt(document.getElementById('transfer-amount').value, 10);
+        const remark = document.getElementById('transfer-remark').value.trim();
+
+        if (!points || points <= 0) {
+          showToast('कृपया मान्य पॉइंट्स दर्ज करें', '⚠️');
+          return;
+        }
+
+        try {
+          const res = await fetch(`${API_BASE}/transfer-points`, {
+            method: 'POST',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({ playerId, points, remark: remark || 'खाईवाल टॉप-अप' })
+          });
+          const data = await res.json();
+
+          if (data.success) {
+            closeAllModals();
+            showToast(`₹${points} पॉइंट्स सफलतापूर्वक जमा किए गए!`, '✅');
+            document.getElementById('transfer-amount').value = '';
+            document.getElementById('transfer-remark').value = '';
+            currentAgent.floating_balance = data.agentBalance;
+            showDashboardView();
+            loadAllData();
+          } else {
+            showToast(data.error || 'ट्रांसफर असफल', '❌');
+          }
+        } catch (e) {
+          showToast('सर्वर त्रुटि', '❌');
+        }
+      };
+
+      window.submitPointsWithdrawal = async function() {
+        const playerId = document.getElementById('withdraw-player-select').value;
+        const points = parseInt(document.getElementById('withdraw-amount').value, 10);
+        const remark = document.getElementById('withdraw-remark').value.trim();
+
+        if (!points || points <= 0) {
+          showToast('कृपया मान्य पॉइंट्स दर्ज करें', '⚠️');
+          return;
+        }
+
+        try {
+          const res = await fetch(`${API_BASE}/withdraw-points`, {
+            method: 'POST',
+            headers: getAuthHeaders(),
+            body: JSON.stringify({ playerId, points, remark: remark || 'खाईवाल नकद निकासी' })
+          });
+          const data = await res.json();
+
+          if (data.success) {
+            closeAllModals();
+            showToast(`₹${points} पॉइंट्स खिलाड़ी से प्राप्त हुए!`, '✅');
+            document.getElementById('withdraw-amount').value = '';
+            document.getElementById('withdraw-remark').value = '';
+            currentAgent.floating_balance = data.agentBalance;
+            showDashboardView();
+            loadAllData();
+          } else {
+            showToast(data.error || 'निकासी असफल', '❌');
+          }
+        } catch (e) {
+          showToast('सर्वर त्रुटि', '❌');
+        }
+      };
+
+      window.openKhataModal = async function() {
+        await loadCommissionSheet();
+        if (!currentSheet) return;
+
+        document.getElementById('khata-turnover').textContent = '₹' + Number(currentSheet.totalTurnover).toLocaleString('en-IN');
+        document.getElementById('khata-comm-earned').textContent = '₹' + Number(currentSheet.commissionEarned).toLocaleString('en-IN');
+        document.getElementById('khata-net-margin').textContent = '₹' + Number(currentSheet.netKhaiwalMargin).toLocaleString('en-IN');
+        document.getElementById('khata-slip-textarea').value = currentSheet.whatsappText;
+
+        const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(currentSheet.whatsappText)}`;
+        document.getElementById('btn-share-whatsapp').href = waUrl;
+
+        document.getElementById('modal-khata').classList.add('active');
+      };
+
+      window.copyKhataToClipboard = async function() {
+        const text = document.getElementById('khata-slip-textarea').value;
+        if (navigator.clipboard) {
+          await navigator.clipboard.writeText(text);
+          showToast('📋 पर्ची कॉपी हो गई है!', '✅');
+        } else {
+          document.getElementById('khata-slip-textarea').select();
+          document.execCommand('copy');
+          showToast('📋 पर्ची कॉपी हो गई!', '✅');
+        }
+      };
+
+      checkAuth();
+    })();
+  </script>
+</body>
+</html>

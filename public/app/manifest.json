@@ -1,0 +1,55 @@
+{
+  "name": "Kalyan 777 - Official Online Matka App",
+  "short_name": "Kalyan 777",
+  "description": "Official Kalyan 777 Points Matka Gaming Platform with Live Bazaars, Instant Results, Jodi & Panel Charts",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#05070e",
+  "theme_color": "#05070e",
+  "icons": [
+    {
+      "src": "img/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "categories": ["entertainment", "games"],
+  "shortcuts": [
+    {
+      "name": "Live Bazaars",
+      "short_name": "Bazaars",
+      "description": "View live running market countdowns & place bids",
+      "url": "/?tab=home&source=shortcut",
+      "icons": [{ "src": "img/logo.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Starline Draws",
+      "short_name": "Starline",
+      "description": "Hourly Starline live draws & bids",
+      "url": "/?tab=starline&source=shortcut",
+      "icons": [{ "src": "img/logo.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Deposit Points",
+      "short_name": "Deposit",
+      "description": "Scan QR & add points via UPI",
+      "url": "/?tab=wallet&action=deposit&source=shortcut",
+      "icons": [{ "src": "img/logo.png", "sizes": "192x192" }]
+    }
+  ]
+}

@@ -1,0 +1,485 @@
+/* ==========================================================================
+   MATKA PRO PAGES & ADVANCED VISUALIZATIONS
+   Cutting Sheet, Result Board, Market Cards, Jodi Matrix
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   MARKET CARDS (BAZAAR OVERVIEW)
+   -------------------------------------------------------------------------- */
+.markets-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.market-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.market-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(245, 158, 11, 0.4);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.market-card.running {
+  border-left: 4px solid var(--accent-emerald);
+}
+
+.market-card.closed {
+  border-left: 4px solid var(--text-dim);
+  opacity: 0.85;
+}
+
+.market-card.upcoming {
+  border-left: 4px solid var(--accent-cyan);
+}
+
+.market-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.market-name-group h4 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.market-name-group span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+/* Scoreboard Digit Display */
+.market-scoreboard {
+  background: rgba(7, 10, 17, 0.7);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.85rem;
+  text-align: center;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.scoreboard-label {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  letter-spacing: 1px;
+  margin-bottom: 0.25rem;
+}
+
+.scoreboard-result {
+  font-family: var(--font-mono);
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.scoreboard-result .panna {
+  color: var(--brand-amber);
+}
+
+.scoreboard-result .jodi {
+  color: #ffffff;
+  background: rgba(245, 158, 11, 0.2);
+  padding: 0.1rem 0.5rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+}
+
+.scoreboard-result .empty-num {
+  color: var(--text-dim);
+}
+
+.market-timings {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  background: rgba(22, 32, 50, 0.5);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+}
+
+.market-timings b {
+  color: var(--text-main);
+  font-family: var(--font-mono);
+}
+
+.market-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: auto;
+}
+
+/* --------------------------------------------------------------------------
+   CUTTING SHEET & LOAD CHART (BOOKIE RISK MATRIX)
+   -------------------------------------------------------------------------- */
+.cutting-banner {
+  background: linear-gradient(90deg, rgba(244, 63, 94, 0.15) 0%, rgba(22, 32, 50, 0.7) 100%);
+  border: 1px solid rgba(244, 63, 94, 0.3);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.cutting-banner-text h4 {
+  color: var(--accent-rose);
+  font-size: 1.05rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cutting-banner-text p {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+}
+
+.cutting-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  background: var(--bg-card);
+  padding: 1rem 1.25rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+}
+
+.segmented-control {
+  display: flex;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.25rem;
+  gap: 0.25rem;
+}
+
+.segmented-btn {
+  padding: 0.4rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.segmented-btn.active {
+  background: var(--brand-gold);
+  color: #0b0f19;
+  font-weight: 700;
+  box-shadow: 0 2px 6px var(--brand-gold-glow);
+}
+
+/* Digit Load Cards Grid (0-9) */
+.digit-load-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 900px) {
+  .digit-load-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.digit-load-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  position: relative;
+  transition: transform var(--transition-fast), border-color var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+}
+
+.digit-load-card:hover {
+  transform: translateY(-2px);
+}
+
+.digit-load-card.risk-high {
+  border-color: rgba(244, 63, 94, 0.5);
+  background: linear-gradient(180deg, rgba(244, 63, 94, 0.1) 0%, var(--bg-surface) 100%);
+}
+
+.digit-load-card.risk-safe {
+  border-color: rgba(16, 185, 129, 0.5);
+  background: linear-gradient(180deg, rgba(16, 185, 129, 0.1) 0%, var(--bg-surface) 100%);
+}
+
+.digit-load-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.digit-number-badge {
+  font-size: 2rem;
+  font-weight: 900;
+  font-family: var(--font-mono);
+  line-height: 1;
+}
+
+.digit-load-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-size: 0.78rem;
+  margin-top: 0.5rem;
+}
+
+.digit-load-row {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-muted);
+}
+
+.digit-load-row b {
+  font-family: var(--font-mono);
+  color: var(--text-main);
+}
+
+/* --------------------------------------------------------------------------
+   JODI 00-99 HEATMAP MATRIX
+   -------------------------------------------------------------------------- */
+.jodi-matrix-wrap {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+}
+
+.jodi-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .jodi-matrix-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+.jodi-cell {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.25rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.jodi-cell:hover {
+  transform: scale(1.05);
+  z-index: 5;
+  border-color: var(--brand-gold);
+}
+
+.jodi-num {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: block;
+  color: var(--text-main);
+}
+
+.jodi-amount {
+  font-size: 0.65rem;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
+
+.jodi-cell.hot {
+  background: rgba(244, 63, 94, 0.2);
+  border-color: rgba(244, 63, 94, 0.4);
+}
+.jodi-cell.hot .jodi-amount {
+  color: var(--accent-rose);
+  font-weight: 700;
+}
+
+.jodi-cell.warm {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+/* --------------------------------------------------------------------------
+   DECLARE RESULT BOARD
+   -------------------------------------------------------------------------- */
+.declare-board {
+  background: linear-gradient(135deg, rgba(22, 32, 50, 0.9) 0%, rgba(16, 23, 38, 0.9) 100%);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow-gold);
+}
+
+.declare-board-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.declare-board-header h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+.result-live-preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 1.5rem 0;
+  flex-wrap: wrap;
+}
+
+.result-box-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.result-box-title {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.result-display-pill {
+  min-width: 120px;
+  height: 60px;
+  background: rgba(7, 10, 17, 0.8);
+  border: 2px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--brand-amber);
+  box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.result-display-pill.jodi-center {
+  min-width: 90px;
+  background: rgba(245, 158, 11, 0.15);
+  border-color: var(--brand-gold);
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(245, 158, 11, 0.6);
+}
+
+.panna-sum-badge {
+  background: rgba(16, 185, 129, 0.2);
+  color: var(--accent-emerald);
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+}
+
+.declare-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  background: rgba(7, 10, 17, 0.5);
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-subtle);
+  margin-bottom: 1.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   GAME RATES EDITOR CARDS
+   -------------------------------------------------------------------------- */
+.rates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.rate-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: transform var(--transition-fast);
+}
+
+.rate-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.rate-card-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.rate-multiplier-input {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rate-multiplier-input span {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}

@@ -1,0 +1,28 @@
+{
+  "name": "kalyan-777-gaming-platform",
+  "version": "1.2.0",
+  "description": "Kalyan 777 Official Real-Time Points Gaming Platform with WebSockets, Admin Control Center, and Player Mobile Web App",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "kalyan-777",
+    "matka",
+    "points-wallet",
+    "pwa",
+    "admin-panel",
+    "websockets"
+  ],
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "ws": "^8.22.0"
+  },
+  "author": "Kalyan 777 Team",
+  "license": "ISC"
+}
